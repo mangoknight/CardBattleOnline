@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var sqlcmd = require('./model/sqlcmd');
 var index = require('./routes/index');
 var users = require('./routes/users');
+var user = require('./model/user');
 var test = require('./routes/test');
 var encrypt = require('./model/encrypt');
 var app = express();
@@ -19,8 +20,7 @@ io.on('connection', function (socket) {
 
   //登录
   socket.on('login', (msg) => {
-    console.log(msg.username);
-    var str = new sqlcmd.Select('user', ['user_pwd']).Where({ user_name: msg.username }).query;
+    var str = new sqlcmd.Select('user', ['user_pwd']).Where({ user_name: msg.name }).query;
     sqlcmd.Doit(str, (a, b) => {
       console.log(a);
       console.log(b.length);
@@ -28,12 +28,15 @@ io.on('connection', function (socket) {
         var pass = b[0].user_pwd;
         var p =  encrypt.enc(msg.password);
         if (pass == p) {
-          io.emit('loginBack'+msg.username, { status: true, content: ' ', user: msg.username });
+          user.userinfo(msg.name, (info) =>{
+            io.emit('loginBack'+msg.name, { status: true, content: ' ', user: info});
+          })
+
         } else {
-          io.emit('loginBack'+msg.username, { status: false, content: '密码不正确', user: msg.username });
+          io.emit('loginBack'+msg.name, { status: false, content: '密码不正确', user: msg.name });
         }
       } else {
-        io.emit('loginBack'+msg.username, { status: false, content: '请注册！', user: msg.username });
+        io.emit('loginBack'+msg.name, { status: false, content: '请注册！', user: msg.name });
       }
     });
   });
