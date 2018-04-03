@@ -12,4 +12,13 @@ var sql={
     database: 'lingtu'
     //port: port  
 };
+var redis={
+    host:'127.0.0.1',
+    port:6379,
+    opts:{},
+    ///没有密码请填写空字符串
+    //password:''
+  };
+
+module.exports.redis=redis;
 module.exports.sql=sql;
