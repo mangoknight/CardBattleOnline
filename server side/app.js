@@ -13,35 +13,13 @@ var test = require('./routes/test');
 var encrypt = require('./model/encrypt');
 var app = express();
 var config = require('./model/config');
-// var clisent = require("redis")
-// , redis = clisent.createClient(config.redis.port, config.redis.host, config.redis.opts);
+var clisent = require("redis")
+, redis = clisent.createClient(config.redis.port, config.redis.host, config.redis.opts);
 
-// //连接错误处理
-// redis.on("error", function (error) {
-//     console.log(error);
-// });
-
-
-//   redis.set("node_redis_key", JSON.stringify({ "name": "wolfy", age: 28 }), function (error, res) {
-//         if (error) {
-//             console.log(error);
-//         } else {
-//             console.log(res);
-//         };
-//     });
-
-
-// redis.get("node_redis_key",  function (error, res) {
-//       if (error) {
-//           console.log(error);
-//       } else {
-//           console.log(res);
-//       };
-//       //操作完成，关闭redis连接
-//       redis.end(true);
-
-//   });
-
+//连接错误处理
+redis.on("error", function (error) {
+    console.log(error);
+});
 
 
 
@@ -101,21 +79,35 @@ io.on('connection', function (socket) {
       }
     });
   });
+  //开始战斗
   socket.on('startGame', (msg) => {
     var rrr = room.findWaitRoom();
-    if (rrr.status) {
-      console.log('joinroom');
+    if (rrr.status==1) {
+      console.log('joinroom');//有房间加入房间
       room.joinRoom(rrr.room.id, msg.user, (back) => {
-        console.log(back);
-      })
+        console.log(back);//初始化个人属性
+        redis.set(msg.user.name+back.id,JSON.stringify({name:msg.user.name,room:back.id,level:0,HP:50,people:5,money:0}),
+        (error, res) => {
+                  if (error) {
+                      console.log(error);
+                  } else {
+                      socket.emit('joinOk'+back.user1,back);
+                      socket.emit('joinOk'+back.user2,back);
+                  }
+        });
+      });
     } else {
       console.log('newroom');
       room.newRoom(msg.user, (back1) => {
         console.log(back1);
+        socket.emit('wait'+msg.user.name,back1);
       })
     }
   });
-
+  socket.on('round1',(msg)=>{
+    var a1 = Math.random();
+    var a2 = Math.random();
+  })
 });
 
 // view engine setup

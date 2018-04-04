@@ -17,8 +17,28 @@ var redis={
     port:6379,
     opts:{},
     ///没有密码请填写空字符串
-    //password:''
+    password:''
   };
 
 module.exports.redis=redis;
 module.exports.sql=sql;
+
+//redis.set("node_redis_key", JSON.stringify({ "name": "wolfy", age: 28 }), function (error, res) {
+//         if (error) {
+//             console.log(error);
+//         } else {
+//             console.log(res);
+//         };
+//     });
+
+
+// redis.get("r",  function (error, res) {
+//       if (error) {
+//           console.log(error);
+//       } else {
+//           console.log(res);
+//       };
+//       //操作完成，关闭redis连接
+//       redis.end(true);
+
+//   });
