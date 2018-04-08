@@ -17,7 +17,11 @@ var obj = {
     } 
 };
 //总调用
-var calculateBouns =function(myself,enemy) {
+var calculateBouns =function(level,myself,enemy) {
     return obj[level](myself,enemy);
 };
+var getOne = function(){
+    return Math.random() * 54 | 0;
+}
 module.exports.calculateBouns = calculateBouns;
+module.exports.getOne=getOne;

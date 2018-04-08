@@ -15,14 +15,13 @@ var app = express();
 var config = require('./model/config');
 var clisent = require("redis")
 , redis = clisent.createClient(config.redis.port, config.redis.host, config.redis.opts);
-
+var ccc= require("./model/card");
 //连接错误处理
 redis.on("error", function (error) {
     console.log(error);
 });
 
-
-
+console.log(a1);
 var http = require('http').Server(app).listen(7777);
 var io = require("socket.io")(http);
 //var epwd = encrypt.enc('1111');
@@ -86,13 +85,15 @@ io.on('connection', function (socket) {
       console.log('joinroom');//有房间加入房间
       room.joinRoom(rrr.room.id, msg.user, (back) => {
         console.log(back);//初始化个人属性
-        redis.set(msg.user.name+back.id,JSON.stringify({name:msg.user.name,room:back.id,level:0,HP:50,people:5,money:0}),
+        var zhuangtai = {name:msg.user.user_name,room:back.id,level:0,HP:50,people:5,money:0};
+        redis.set("info"+msg.user.user_name+back.id,JSON.stringify(zhuangtai),
         (error, res) => {
                   if (error) {
                       console.log(error);
                   } else {
-                      socket.emit('joinOk'+back.user1,back);
-                      socket.emit('joinOk'+back.user2,back);
+                      
+                      socket.emit('joinOk'+back.user1.user_name,{room:back,status:zhuangtai});
+                      socket.emit('joinOk'+back.user2.user_name,{room:back,status:zhuangtai});
                   }
         });
       });
@@ -100,13 +101,48 @@ io.on('connection', function (socket) {
       console.log('newroom');
       room.newRoom(msg.user, (back1) => {
         console.log(back1);
-        socket.emit('wait'+msg.user.name,back1);
+        var zhuangtai = {name:msg.user.user_name,room:back1.id,level:0,HP:50,people:5,money:0};
+        redis.set("info"+msg.user.user_name+back1.id,JSON.stringify(zhuangtai),
+        (error, res) => {
+                  if (error) {
+                      console.log(error);
+                  } else {
+                      
+                    socket.emit('wait'+msg.user.user_name,{room:back1,status:zhuangtai});
+                  }
+        });
+        
       })
     }
   });
   socket.on('round1',(msg)=>{
-    var a1 = Math.random();
-    var a2 = Math.random();
+    var a1 = new Array();
+    for(var i= 0;i<4;i++){
+      a1[i]=ccc.getOne();
+    }
+    console.log(a1);
+    redis.set("card"+msg.room.id+msg.room.user1,a1);
+    socket.emit("card"+msg.room.id+msg.room.user1,a1);
+    var a2 = new Array();
+    for(var i= 0;i<5;i++){
+      a2[i]=ccc.getOne();
+    }
+    redis.set("card"+msg.room.id+msg.room.user2,a2);
+    socket.emit("card"+msg.room.id+msg.room.user2,a2);
+  });
+  socket.on('chupai',(msg)=>{
+    //msg : roomid enemy(name) user(name)  card.id  
+    var myself = redis.get("info"+msg.user+msg.roomid);
+    var enemy =redis.get("info"+msg.enemy+msg.roomid);
+    var cards = redis.get("card"+msg.roomid+msg.user);
+    var result = ccc.calculateBouns(msg.cardid,myself,enemy);
+    if(result.status){
+      removeByValue(cards, msg.cardid);
+      redis.set("info"+msg.user+msg.roomid,result.myself);
+      redis.set("info"+msg.enemy+msg.roomid,result.enemy);
+      socket.emit()      
+    }
+
   })
 });
 
