@@ -130,6 +130,7 @@ io.on('connection', function (socket) {
     redis.set("card"+msg.room.id+msg.room.user2,a2);
     socket.emit("card"+msg.room.id+msg.room.user2,a2);
   });
+  //出牌对战
   socket.on('chupai',(msg)=>{
     //msg : roomid enemy(name) user(name)  card.id  
     var myself = redis.get("info"+msg.user+msg.roomid);
@@ -138,11 +139,40 @@ io.on('connection', function (socket) {
     var result = ccc.calculateBouns(msg.cardid,myself,enemy);
     if(result.status){
       removeByValue(cards, msg.cardid);
-      redis.set("info"+msg.user+msg.roomid,result.myself);
-      redis.set("info"+msg.enemy+msg.roomid,result.enemy);
-      socket.emit()      
+      redis.set("card"+msg.roomid+msg.user,cards);
+      //判断有没有死的
+      var die = user.dieOrAlive(myself,enemy);
+      if(die.result){//如果没死的，游戏继续，更新redis，发回客户端
+        redis.set("info"+msg.user+msg.roomid,result.myself);
+        redis.set("info"+msg.enemy+msg.roomid,result.enemy);
+        socket.emit("endpai"+enemy.name,result.enemy);
+        socket.emit("endpai"+myself.name,result.myself);      
+      }else{//如果有死的，清除redis，给失败的发送失败消息，胜利的接收胜利消息 ，
+        redis.del("info"+msg.user+msg.roomid);
+        redis.del("info"+msg.enemy+msg.roomid);
+        redis.del("card"+msg.roomid+msg.user);
+        redis.del("card"+msg.roomid+msg.enemy);
+        socket.emit("GameOver"+msg.roomid,{room:msg.roomid,lost:die.name});
+      }
+     
+    }else{
+      socket.emit("cardFail"+msg.user,result);
     }
 
+  });
+  //退房
+  socket.on("quit",(msg)=>{
+    
+  });
+  //升级属性
+  socket.on("levelup");
+  //发牌
+  socket.on("fapai",(msg)=>{
+    var card1 = ccc.getOne();
+    var cards = redis.get("card"+msg.roomid+msg.user);
+    cards.push(card1);
+    redis.set("card"+msg.roomid+msg.user,cards);
+    socket.emit("OneCardBack"+msg.user,card1);
   })
 });
 
