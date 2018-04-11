@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "227d8661-d7bc-4a7e-afc2-775e3bf8e8cf",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "card_back_season_1605_gold": {
+      "ver": "1.0.3",
+      "uuid": "f6a8921a-169a-4c34-a01f-8006364fc1e7",
+      "rawTextureUuid": "227d8661-d7bc-4a7e-afc2-775e3bf8e8cf",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 246,
+      "trimY": 93,
+      "width": 532,
+      "height": 838,
+      "rawWidth": 1024,
+      "rawHeight": 1024,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

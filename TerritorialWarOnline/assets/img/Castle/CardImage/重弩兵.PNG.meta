@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "8fed7d44-418e-4b8f-b026-31356b18dce4",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "重弩兵": {
+      "ver": "1.0.3",
+      "uuid": "a64dc749-ba8c-41ab-a542-ec6c87d12942",
+      "rawTextureUuid": "8fed7d44-418e-4b8f-b026-31356b18dce4",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 160,
+      "height": 234,
+      "rawWidth": 160,
+      "rawHeight": 234,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "fa06f412-5902-4556-b36f-c90d7e1db2ba",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "诸葛弩": {
+      "ver": "1.0.3",
+      "uuid": "53d8aa9b-5b3f-4d17-8e89-6cd89449f196",
+      "rawTextureUuid": "fa06f412-5902-4556-b36f-c90d7e1db2ba",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 152,
+      "height": 219,
+      "rawWidth": 152,
+      "rawHeight": 219,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

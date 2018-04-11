@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "4d3cf59f-59ae-46b4-902c-ff3976b3805f",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "蓝方弓兵": {
+      "ver": "1.0.3",
+      "uuid": "20a197fd-b4ae-4ef3-b139-233160fea088",
+      "rawTextureUuid": "4d3cf59f-59ae-46b4-902c-ff3976b3805f",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 161,
+      "height": 221,
+      "rawWidth": 161,
+      "rawHeight": 221,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

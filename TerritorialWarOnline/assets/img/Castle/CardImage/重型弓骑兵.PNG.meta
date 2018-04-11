@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "472f31a2-9204-493f-8640-6ee5125763e4",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "重型弓骑兵": {
+      "ver": "1.0.3",
+      "uuid": "441b038d-dfd0-450d-8eaa-fad2eacf47da",
+      "rawTextureUuid": "472f31a2-9204-493f-8640-6ee5125763e4",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 163,
+      "height": 234,
+      "rawWidth": 163,
+      "rawHeight": 234,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "c0e167c8-39dc-4a7d-9084-643260b4f57a",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "红方枪兵": {
+      "ver": "1.0.3",
+      "uuid": "1cd22922-34ce-4df1-b21f-ca0ea45c4451",
+      "rawTextureUuid": "c0e167c8-39dc-4a7d-9084-643260b4f57a",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 154,
+      "height": 216,
+      "rawWidth": 154,
+      "rawHeight": 216,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

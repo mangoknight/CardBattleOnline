@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "cd727256-9d8c-40c7-9756-c4ef31a848ad",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "猎人": {
+      "ver": "1.0.3",
+      "uuid": "00ef66be-390f-4597-90dc-0311be787200",
+      "rawTextureUuid": "cd727256-9d8c-40c7-9756-c4ef31a848ad",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 164,
+      "height": 224,
+      "rawWidth": 164,
+      "rawHeight": 224,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "9f56f1db-479e-4e48-a8e5-d4948843912d",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "蓝方重步兵": {
+      "ver": "1.0.3",
+      "uuid": "680b97b6-114c-40a4-a2aa-7008b1425f8b",
+      "rawTextureUuid": "9f56f1db-479e-4e48-a8e5-d4948843912d",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 142,
+      "height": 205,
+      "rawWidth": 142,
+      "rawHeight": 205,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

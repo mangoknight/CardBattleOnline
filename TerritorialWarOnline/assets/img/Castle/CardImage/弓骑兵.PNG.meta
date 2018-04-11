@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "80f402f7-967a-441b-9d40-b0afde400579",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "弓骑兵": {
+      "ver": "1.0.3",
+      "uuid": "b5ed7c46-eed2-44d2-b42c-8939a770da41",
+      "rawTextureUuid": "80f402f7-967a-441b-9d40-b0afde400579",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 151,
+      "height": 214,
+      "rawWidth": 151,
+      "rawHeight": 214,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

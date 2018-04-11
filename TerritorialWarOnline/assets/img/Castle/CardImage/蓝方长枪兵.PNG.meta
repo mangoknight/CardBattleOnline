@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "48021cd6-1cab-4214-baeb-b08ae8d847bc",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "蓝方长枪兵": {
+      "ver": "1.0.3",
+      "uuid": "040deac0-5a5b-48ad-bf86-56d651513a62",
+      "rawTextureUuid": "48021cd6-1cab-4214-baeb-b08ae8d847bc",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 145,
+      "height": 215,
+      "rawWidth": 145,
+      "rawHeight": 215,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

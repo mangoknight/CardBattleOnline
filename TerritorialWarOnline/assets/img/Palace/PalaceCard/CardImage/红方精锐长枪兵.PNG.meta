@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "64b998f7-66ad-451f-9efc-689262c84e19",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "红方精锐长枪兵": {
+      "ver": "1.0.3",
+      "uuid": "c088be4f-ea4f-4d0b-a504-f817b6234225",
+      "rawTextureUuid": "64b998f7-66ad-451f-9efc-689262c84e19",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 150,
+      "height": 224,
+      "rawWidth": 150,
+      "rawHeight": 224,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

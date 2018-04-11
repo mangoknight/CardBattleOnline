@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "770b1090-9876-4dae-8642-ea680c0958fe",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "红色弩兵": {
+      "ver": "1.0.3",
+      "uuid": "cc09fe6a-c07f-4cc1-af23-c40d073b64a1",
+      "rawTextureUuid": "770b1090-9876-4dae-8642-ea680c0958fe",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 148,
+      "height": 216,
+      "rawWidth": 148,
+      "rawHeight": 216,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

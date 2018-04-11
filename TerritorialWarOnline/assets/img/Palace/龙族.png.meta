@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "df06415d-9090-4e78-b6fd-e50a28a17dc7",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "龙族": {
+      "ver": "1.0.3",
+      "uuid": "c77b96d7-5dd7-4ae7-8eb2-fc436aea967e",
+      "rawTextureUuid": "df06415d-9090-4e78-b6fd-e50a28a17dc7",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 1472,
+      "height": 1088,
+      "rawWidth": 1472,
+      "rawHeight": 1088,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

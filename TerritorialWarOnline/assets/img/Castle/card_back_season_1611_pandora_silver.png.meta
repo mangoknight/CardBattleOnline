@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "93fb25ea-0df5-401d-84e0-b624bccd841a",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "card_back_season_1611_pandora_silver": {
+      "ver": "1.0.3",
+      "uuid": "42e17acb-2af2-4403-9adc-a0ceace48fe7",
+      "rawTextureUuid": "93fb25ea-0df5-401d-84e0-b624bccd841a",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 245,
+      "trimY": 92,
+      "width": 534,
+      "height": 840,
+      "rawWidth": 1024,
+      "rawHeight": 1024,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

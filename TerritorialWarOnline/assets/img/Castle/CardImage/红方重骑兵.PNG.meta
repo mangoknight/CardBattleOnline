@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "de98468b-b78c-448b-a071-a91e486f1881",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "红方重骑兵": {
+      "ver": "1.0.3",
+      "uuid": "bf1c6fdc-2782-4c3d-8123-15f9248f7858",
+      "rawTextureUuid": "de98468b-b78c-448b-a071-a91e486f1881",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 167,
+      "height": 224,
+      "rawWidth": 167,
+      "rawHeight": 224,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

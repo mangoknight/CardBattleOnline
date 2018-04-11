@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "d8508f3e-f309-4e41-b1d3-7b5f6d01f9c9",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "霹雳车": {
+      "ver": "1.0.3",
+      "uuid": "f73b6a55-5502-4752-b456-c5f0f1d814f8",
+      "rawTextureUuid": "d8508f3e-f309-4e41-b1d3-7b5f6d01f9c9",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 154,
+      "height": 218,
+      "rawWidth": 154,
+      "rawHeight": 218,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

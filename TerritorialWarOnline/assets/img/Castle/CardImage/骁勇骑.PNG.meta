@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "99fa6b7c-46c3-489c-9d06-bad37212321c",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "骁勇骑": {
+      "ver": "1.0.3",
+      "uuid": "c98ceb28-71d2-4a99-a04b-91bdaa97dae8",
+      "rawTextureUuid": "99fa6b7c-46c3-489c-9d06-bad37212321c",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 181,
+      "height": 222,
+      "rawWidth": 181,
+      "rawHeight": 222,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

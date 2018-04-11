@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "9d2016d1-eac4-4ebd-a9f3-ec0e6fa2751a",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "连弩车": {
+      "ver": "1.0.3",
+      "uuid": "aa997fa8-6140-4f25-bca0-cb7b33674fe7",
+      "rawTextureUuid": "9d2016d1-eac4-4ebd-a9f3-ec0e6fa2751a",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 152,
+      "height": 200,
+      "rawWidth": 152,
+      "rawHeight": 200,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

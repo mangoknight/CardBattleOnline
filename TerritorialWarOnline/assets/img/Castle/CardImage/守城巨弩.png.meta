@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "b74bcebd-1655-4b33-a673-5b5b555ae911",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "守城巨弩": {
+      "ver": "1.0.3",
+      "uuid": "bce842f5-dfde-4011-8508-e411ded3a7ba",
+      "rawTextureUuid": "b74bcebd-1655-4b33-a673-5b5b555ae911",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 600,
+      "height": 479,
+      "rawWidth": 600,
+      "rawHeight": 479,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

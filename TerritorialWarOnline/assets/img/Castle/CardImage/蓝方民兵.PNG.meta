@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "eb46a2aa-ec82-4a34-8cb4-5bb8b69318c3",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "蓝方民兵": {
+      "ver": "1.0.3",
+      "uuid": "2c632dad-33fa-44ee-8690-1fa9f82f7614",
+      "rawTextureUuid": "eb46a2aa-ec82-4a34-8cb4-5bb8b69318c3",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 156,
+      "height": 214,
+      "rawWidth": 156,
+      "rawHeight": 214,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
