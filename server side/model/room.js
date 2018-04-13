@@ -35,7 +35,7 @@ function joinRoom(id,user,callback){
 }
 //新建房间
 function newRoom(user,callback){
-    var newR = {id:roomCount,status:1,user1: user,user2:''}
+    var newR = {id:roomCount,status:1,user1: user,user2:'',round:0}
     roomCount++;
     rooms.push(newR);
     callback(newR);

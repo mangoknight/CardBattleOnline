@@ -153,6 +153,7 @@ io.on('connection', function (socket) {
         redis.del("card"+msg.roomid+msg.user);
         redis.del("card"+msg.roomid+msg.enemy);
         socket.emit("GameOver"+msg.roomid,{room:msg.roomid,lost:die.name});
+        
       }
      
     }else{
@@ -162,10 +163,22 @@ io.on('connection', function (socket) {
   });
   //退房
   socket.on("quit",(msg)=>{
-    
+    if(msg.which == 1){
+      //退房间输场+1 对手胜场+1 弹出胜利
+      //游戏结束 清除redis
+      //
+    }
   });
   //升级属性
-  socket.on("levelup");
+  socket.on("levelup",(msg)=>{
+    var user1 = redis.get("info"+msg.user1);
+    var user2 = redis.get("info"+msg.user2);
+    if(msg.round%2==0){
+      socket.emit("updateProperty"+msg.roomid,{user1: user1,user2:user2});
+    }else{
+
+    }
+  });
   //发牌
   socket.on("fapai",(msg)=>{
     var card1 = ccc.getOne();
