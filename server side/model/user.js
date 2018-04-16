@@ -1,4 +1,4 @@
-import { calculateBouns } from './card';
+// import { calculateBouns } from './card';
 
 var sqlcmd = require('./sqlcmd');
 var config = require('./config');

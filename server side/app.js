@@ -20,8 +20,8 @@ var ccc= require("./model/card");
 redis.on("error", function (error) {
     console.log(error);
 });
+ 
 
-console.log(a1);
 var http = require('http').Server(app).listen(7777);
 var io = require("socket.io")(http);
 //var epwd = encrypt.enc('1111');
@@ -85,7 +85,8 @@ io.on('connection', function (socket) {
       console.log('joinroom');//有房间加入房间
       room.joinRoom(rrr.room.id, msg.user, (back) => {
         console.log(back);//初始化个人属性
-        var zhuangtai = {name:msg.user.user_name,room:back.id,level:0,HP:50,people:5,money:0};
+        var zhuangtai = {name:msg.user.name,room:back.id,cityLevel:0,
+          junshiLevel:0,HP:10,defence:10,people:10,money:0,zhaomu1:0,zhaomu2:0};
         redis.set("info"+msg.user.user_name+back.id,JSON.stringify(zhuangtai),
         (error, res) => {
                   if (error) {
@@ -101,7 +102,8 @@ io.on('connection', function (socket) {
       console.log('newroom');
       room.newRoom(msg.user, (back1) => {
         console.log(back1);
-        var zhuangtai = {name:msg.user.user_name,room:back1.id,level:0,HP:50,people:5,money:0};
+        var zhuangtai = {name:msg.user.name,room:back.id,cityLevel:0,
+          junshiLevel:0,HP:10,defence:10,people:10,money:0,zhaomu1:0,zhaomu2:0};
         redis.set("info"+msg.user.user_name+back1.id,JSON.stringify(zhuangtai),
         (error, res) => {
                   if (error) {
@@ -117,14 +119,14 @@ io.on('connection', function (socket) {
   });
   socket.on('round1',(msg)=>{
     var a1 = new Array();
-    for(var i= 0;i<4;i++){
+    for(var i= 0;i<3;i++){
       a1[i]=ccc.getOne();
     }
     console.log(a1);
     redis.set("card"+msg.room.id+msg.room.user1,a1);
     socket.emit("card"+msg.room.id+msg.room.user1,a1);
     var a2 = new Array();
-    for(var i= 0;i<5;i++){
+    for(var i= 0;i<4;i++){
       a2[i]=ccc.getOne();
     }
     redis.set("card"+msg.room.id+msg.room.user2,a2);
