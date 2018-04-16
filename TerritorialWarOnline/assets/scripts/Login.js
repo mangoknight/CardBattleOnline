@@ -19,19 +19,16 @@ cc.Class({
         }
     },
 
-    // use this for initialization
+      // use this for initialization
     onLoad: function () {
        
-        socket = window.io.connect('http://localhost:7777');
+        socket = window.io.connect('http://192.168.1.103:7777');
         
         
     },
  
     login: function() {
-        // var xhr = new XMLHttpRequest();
         
-        
-		
         var username =this.userText.string;
 		var pwd =this.pwText.string;
 		
@@ -48,7 +45,8 @@ cc.Class({
             socket.emit('login',map);
             socket.on('loginBack'+username,(msg)=>{
 				if(msg.status){
-					cc.director.loadScene('main');
+					cc.sys.localStorage.setItem("userInfo",JSON.stringify(msg.user));	
+					cc.director.loadScene('Surface');
 				}else{
 					this.error.string = msg.content;
 					this.showError.active=true;

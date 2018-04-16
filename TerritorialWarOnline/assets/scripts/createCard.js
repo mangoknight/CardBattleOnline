@@ -26,7 +26,7 @@ cc.Class({
         this.cardname.string = card.name;
 		this.effect.string = card.effect;
 		this.img.spriteFrame = this.cardImg[card.id];
-		this.border.spriteFrame = this.cardBorder[card.id];
+		this.border.spriteFrame = this.cardBorder[0];
         
     },
 	//翻牌

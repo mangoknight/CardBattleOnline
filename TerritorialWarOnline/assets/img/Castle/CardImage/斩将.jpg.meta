@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "10aa1fd2-9433-437b-b118-1017cf37889a",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "斩将": {
+      "ver": "1.0.3",
+      "uuid": "5873dc5d-7331-428d-9592-8bc29be9e438",
+      "rawTextureUuid": "10aa1fd2-9433-437b-b118-1017cf37889a",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 444,
+      "height": 612,
+      "rawWidth": 444,
+      "rawHeight": 612,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

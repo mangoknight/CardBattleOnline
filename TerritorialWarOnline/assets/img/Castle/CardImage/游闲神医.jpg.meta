@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "1574dcff-b174-4339-b4b2-f1048e00fc17",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "游闲神医": {
+      "ver": "1.0.3",
+      "uuid": "b88aa04f-1a9e-445c-9fc9-a211fd4e162e",
+      "rawTextureUuid": "1574dcff-b174-4339-b4b2-f1048e00fc17",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 227,
+      "height": 332,
+      "rawWidth": 227,
+      "rawHeight": 332,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
