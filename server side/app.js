@@ -134,6 +134,8 @@ io.on('connection', function (socket) {
   });
   //出牌对战
   socket.on('chupai',(msg)=>{
+    
+
     //msg : roomid enemy(name) user(name)  card.id  
     var myself = redis.get("info"+msg.user+msg.roomid);
     var enemy =redis.get("info"+msg.enemy+msg.roomid);
@@ -142,6 +144,8 @@ io.on('connection', function (socket) {
     if(result.status){
       removeByValue(cards, msg.cardid);
       redis.set("card"+msg.roomid+msg.user,cards);
+      //判断有没有猛将 再多减一点伤害
+
       //判断有没有死的
       var die = user.dieOrAlive(myself,enemy);
       if(die.result){//如果没死的，游戏继续，更新redis，发回客户端
@@ -172,14 +176,23 @@ io.on('connection', function (socket) {
     }
   });
   //升级属性
-  socket.on("levelup",(msg)=>{
-    var user1 = redis.get("info"+msg.user1);
-    var user2 = redis.get("info"+msg.user2);
-    if(msg.round%2==0){
-      socket.emit("updateProperty"+msg.roomid,{user1: user1,user2:user2});
-    }else{
-
-    }
+  socket.on("roundUp",(msg)=>{
+    var user1 = redis.get("info"+msg.user1+msg.roomid);
+    var user2 = redis.get("info"+msg.user2+mag.roomid);
+    //规模变化之后的增加量变化 (if)
+    //判断智将卡 每次防御+1
+    //user1.moneyAdd +=1;
+    //user1.peopleAdd+=1;
+    // user2.moneyAdd +=1;
+    // user2.peopleAdd+=1;
+    user1.money+=user1.moneyAdd;
+    user1.people+=user1.peopleAdd;
+    
+    user2.money+=user2.moneyAdd;
+    user2.people+=user2.peopleAdd;
+    //
+    socket.emit("updateProperty"+msg.roomid,{user1: user1,user2:user2});
+    
   });
   //发牌
   socket.on("fapai",(msg)=>{
