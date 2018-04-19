@@ -177,8 +177,9 @@ io.on('connection', function (socket) {
   });
   //升级属性
   socket.on("roundUp",(msg)=>{
+    //回合数，房间信息
     var user1 = redis.get("info"+msg.user1+msg.roomid);
-    var user2 = redis.get("info"+msg.user2+mag.roomid);
+    var user2 = redis.get("info"+msg.user2+msg.roomid);
     //规模变化之后的增加量变化 (if)
     //判断智将卡 每次防御+1
     //user1.moneyAdd +=1;
@@ -201,6 +202,11 @@ io.on('connection', function (socket) {
     cards.push(card1);
     redis.set("card"+msg.roomid+msg.user,cards);
     socket.emit("OneCardBack"+msg.user,card1);
+  });
+  //主界面聊天
+  socket.on('chat',(msg)=>{
+    //发送方，接收方，内容。
+    socket.emit('chatBack'+msg.receive,msg);
   })
 });
 

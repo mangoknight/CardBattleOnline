@@ -590,7 +590,7 @@ function Recruit(zhaomu,zhaomu1,zhaomu2){
     if(zhaomu1==null||zhaomu1==""){
         zhaomu = 1;
     }else{
-        if(zhaomu2==null||zhaomu2=""){
+        if(zhaomu2==null||zhaomu2==""){
             zhaomu = 2;
         }else{
             zhaomu = 3;
