@@ -207,7 +207,16 @@ io.on('connection', function (socket) {
   socket.on('chat',(msg)=>{
     //发送方，接收方，内容。
     socket.emit('chatBack'+msg.receive,msg);
-  })
+  });
+  //排行榜
+  socket.on('rank',(msg)=>{
+    
+    var select = new sqlcmd.Select('user', ['user_name','user_win','user_lose']).OrderBy({user_win:false}).query;
+    sqlcmd.Doit(select, (a, b) => {
+      
+      socket.emit('rankBack',b);
+    });
+  });
 });
 
 // view engine setup
