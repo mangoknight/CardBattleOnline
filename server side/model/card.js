@@ -240,10 +240,8 @@ var obj = {
             myself.people -= 2;
             myself.money -=5;
             var result1 = Recruit(0,myself.zhaomu1,myself.zhaomu2);
-            var result2 = addPerson(result1,"mengjiang","injure1","mj");
-            myself.zhaomu1=result2.zhaomu1;
-            myself.zhaomu2=result2.zhaomu2;
-            return {status:true,myself:myself,enemy:enemy};
+            var result2 = addPerson(result1,"mengjiang","injure1","mj",myself);
+            return {status:true,myself:result2,enemy:enemy};
         }else{
             return {status:false,info:"金币或人口不足"};
         }
@@ -252,8 +250,8 @@ var obj = {
         if(myself.money>9){
             myself.money -= 10;
             var result1 = Recruit(0,myself.zhaomu1,myself.zhaomu2);
-            var result2 = addPerson(result1,"moushi",null,"ms");
-            return {status:true,myself:myself,enemy:enemy};
+            var result2 = addPerson(result1,"moushi",null,"ms",myself);
+            return {status:true,myself:result2,enemy:enemy};
         }else{
             return {status:false,info:"金币不足"};
         }
@@ -262,8 +260,8 @@ var obj = {
         if(myself.money>4){
             myself.money -= 5;
             var result1 = Recruit(0,myself.zhaomu1,myself.zhaomu2);
-            var result2 = addPerson(result1,"waijiaogua",null,"wj");
-            return {status:true,myself:myself,enemy:enemy};
+            var result2 = addPerson(result1,"waijiaogua",null,"wj",myself);
+            return {status:true,myself:result2,enemy:enemy};
         }else{
             return {status:false,info:"金币不足"};
         }
@@ -273,8 +271,8 @@ var obj = {
             myself.people -= 2;
             myself.money -=5;
             var result1 = Recruit(0,myself.zhaomu1,myself.zhaomu2);
-            var result2 = addPerson(result1,"zhijiang","defence1","zj");
-            return {status:true,myself:myself,enemy:enemy};
+            var result2 = addPerson(result1,"zhijiang","defence1","zj",myself);
+            return {status:true,myself:result2,enemy:enemy};
         }else{
             return {status:false,info:"金币或人口不足"};
         }
@@ -282,9 +280,11 @@ var obj = {
     25 : function(myself,enemy) {//大儒
         if(myself.money>9){
             myself.money -= 10;
+			myself.moneyAdd += 2;
+			myself.peopleAdd += 1;
             var result1 = Recruit(0,myself.zhaomu1,myself.zhaomu2);
-            var result2 = addPerson(result1,"daru","addm2p1","dr");
-            return {status:true,myself:myself,enemy:enemy};
+            var result2 = addPerson(result1,"daru","addm2p1","dr",myself);
+            return {status:true,myself:result2,enemy:enemy};
         }else{
             return {status:false,info:"金币不足"};
         }
@@ -293,8 +293,8 @@ var obj = {
         if(myself.money>9){
             myself.money -= 10;
             var result1 = Recruit(0,myself.zhaomu1,myself.zhaomu2);
-            var result2 = addPerson(result1,"dajisi",null,"djs");
-            return {status:true,myself:myself,enemy:enemy};
+            var result2 = addPerson(result1,"dajisi",null,"djs",myself);
+            return {status:true,myself:result2,enemy:enemy};
         }else{
             return {status:false,info:"金币不足"};
         }
@@ -303,8 +303,8 @@ var obj = {
         if(myself.money>9){
             myself.money -= 10;
             var result1 = Recruit(0,myself.zhaomu1,myself.zhaomu2);
-            var result2 = addPerson(result1,"wu",null,"wu");
-            return {status:true,myself:myself,enemy:enemy};
+            var result2 = addPerson(result1,"wu",null,"wu",myself);
+            return {status:true,myself:result2,enemy:enemy};
         }else{
             return {status:false,info:"金币不足"};
         }
@@ -313,8 +313,8 @@ var obj = {
         if(myself.money>9){
             myself.money -= 10;
             var result1 = Recruit(0,myself.zhaomu1,myself.zhaomu2);
-            var result2 = addPerson(result1,"daoshi",null,"ds");
-            return {status:true,myself:myself,enemy:enemy};
+            var result2 = addPerson(result1,"daoshi",null,"ds",myself);
+            return {status:true,myself:result2,enemy:enemy};
         }else{
             return {status:false,info:"金币不足"};
         }
@@ -587,10 +587,10 @@ function Calculation3(injure,defence,hp){
 }
 //招募位置判断
 function Recruit(zhaomu,zhaomu1,zhaomu2){
-    if(zhaomu1==null){
+    if(zhaomu1==null||zhaomu1==""){
         zhaomu = 1;
     }else{
-        if(zhaomu2==null){
+        if(zhaomu2==null||zhaomu2==""){
             zhaomu = 2;
         }else{
             zhaomu = 3;
@@ -599,24 +599,22 @@ function Recruit(zhaomu,zhaomu1,zhaomu2){
     return zhaomu;
 }
 //添加招募人物信息
-function addPerson(zhaomu,name,skill,type){
+function addPerson(zhaomu,name,skill,type,myself){
     switch(zhaomu){
         case 1:
-            myself.zhaomu1.name=name;
-            myself.zhaomu1.skill=skill;
-            myself.zhaomu1.type=type;
-            return {zhaomu1: myself.zhaomu1,zhaomu2: myself.zhaomu2};
+            myself.zhaomu1={name: name, skill: skill,type: type};
+            return myself;
         case 2:
-            myself.zhaomu2.name=name;
-            myself.zhaomu2.skill=skill;
-            myself.zhaomu2.type=type;
-            return {zhaomu1: myself.zhaomu1,zhaomu2: myself.zhaomu2};
+			myself.zhaomu2={name: name, skill: skill,type: type};
+            return myself;
         case 3:
+			if(myself.zhaomu1.name=="daru"){
+				myself.moneyAdd -= 2;
+				myself.peopleAdd -= 1;
+			}
             myself.zhaomu1=myself.zhaomu2;
-            myself.zhaomu2.name=name;
-            myself.zhaomu2.skill=skill;
-            myself.zhaomu2.type=type;
-            return {zhaomu1: myself.zhaomu1,zhaomu2: myself.zhaomu2};
+            myself.zhaomu2={name: name, skill: skill,type: type};
+            return myself;
         default: break;
    }
 }
@@ -657,11 +655,11 @@ function peopleCount(injure,people){
     return people;
 }
 //总调用
-var calculateBouns =function(id,myself,enemy) {
-     return obj[id](myself,enemy);
+var calculateBouns =function(level,myself,enemy) {
+    return obj[level](myself,enemy);
 };
 var getOne = function(){
     return Math.random() * 54 | 0;
 }
-module.exports.getOne = getOne;
 module.exports.calculateBouns = calculateBouns;
+module.exports.getOne=getOne;
