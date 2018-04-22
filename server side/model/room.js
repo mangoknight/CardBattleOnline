@@ -4,7 +4,7 @@ var config = require('./config');
 
 var rooms = new Array();
 var roomCount = 1;
-//rooms[0]={id:1,status:0,user1:'11',user2:'22'};
+//rooms[0]={id:1,status:0,user1:'{name: level win lose }',user2:'22'};
 //判断有没有新房间
 function findWaitRoom(){
     var r={status: false, room: rooms.length};

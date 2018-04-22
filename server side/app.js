@@ -86,7 +86,7 @@ io.on('connection', function (socket) {
       room.joinRoom(rrr.room.id, msg.user, (back) => {
         console.log(back);//初始化个人属性
         var zhuangtai = {name:msg.user.name,room:back.id,cityLevel:0,
-          junshiLevel:0,HP:10,defence:10,people:10,money:0,zhaomu1:0,zhaomu2:0};
+          junshiLevel:0,HP:10,defence:10,people:10,peopleAdd:1,money:0,moneyAdd:2,zhaomu1:0,zhaomu2:0};
         redis.set("info"+msg.user.user_name+back.id,JSON.stringify(zhuangtai),
         (error, res) => {
                   if (error) {
@@ -102,8 +102,8 @@ io.on('connection', function (socket) {
       console.log('newroom');
       room.newRoom(msg.user, (back1) => {
         console.log(back1);
-        var zhuangtai = {name:msg.user.name,room:back.id,cityLevel:0,
-          junshiLevel:0,HP:10,defence:10,people:10,money:0,zhaomu1:0,zhaomu2:0};
+        var zhuangtai = {name:msg.user.name,room:back1.id,cityLevel:0,
+          junshiLevel:0,HP:10,defence:10,people:10,peopleAdd:1,money:0,moneyAdd:2,zhaomu1:0,zhaomu2:0};
         redis.set("info"+msg.user.user_name+back1.id,JSON.stringify(zhuangtai),
         (error, res) => {
                   if (error) {
@@ -117,7 +117,7 @@ io.on('connection', function (socket) {
       })
     }
   });
-  socket.on('round1',(msg)=>{
+  socket.on('round0',(msg)=>{
     var a1 = new Array();
     for(var i= 0;i<3;i++){
       a1[i]=ccc.getOne();
@@ -126,7 +126,7 @@ io.on('connection', function (socket) {
     redis.set("card"+msg.room.id+msg.room.user1,a1);
     socket.emit("card"+msg.room.id+msg.room.user1,a1);
     var a2 = new Array();
-    for(var i= 0;i<4;i++){
+    for(var i= 0;i<3;i++){
       a2[i]=ccc.getOne();
     }
     redis.set("card"+msg.room.id+msg.room.user2,a2);
@@ -169,8 +169,10 @@ io.on('connection', function (socket) {
   });
   //退房
   socket.on("quit",(msg)=>{
+    //房间信息，which 1 or 2 ，{room：room，which 1 2}
     if(msg.which == 1){
       //退房间输场+1 对手胜场+1 弹出胜利
+      socket.emit("GameOver"+msg.roomid,{room:msg.roomid,lost:msg.room.user1});
       //游戏结束 清除redis
       //
     }
@@ -201,7 +203,9 @@ io.on('connection', function (socket) {
     var cards = redis.get("card"+msg.roomid+msg.user);
     cards.push(card1);
     redis.set("card"+msg.roomid+msg.user,cards);
+    var len = cards.length;
     socket.emit("OneCardBack"+msg.user,card1);
+    socket.emit('addCard'+msg.roomid,{user:msg.user,len:len});
   });
   //主界面聊天
   socket.on('chat',(msg)=>{
