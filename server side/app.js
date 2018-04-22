@@ -172,6 +172,7 @@ io.on('connection', function (socket) {
     //房间信息，which 1 or 2 ，{room：room，which 1 2}
     if(msg.which == 1){
       //退房间输场+1 对手胜场+1 弹出胜利
+      var update ;
       socket.emit("GameOver"+msg.roomid,{room:msg.roomid,lost:msg.room.user1});
       //游戏结束 清除redis
       //
@@ -182,7 +183,6 @@ io.on('connection', function (socket) {
     //回合数，房间信息
     var user1 = redis.get("info"+msg.user1+msg.roomid);
     var user2 = redis.get("info"+msg.user2+msg.roomid);
-    //规模变化之后的增加量变化 (if)
     //判断智将卡 每次防御+1
     //user1.moneyAdd +=1;
     //user1.peopleAdd+=1;
