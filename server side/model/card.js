@@ -660,5 +660,8 @@ function peopleCount(injure,people){
 var calculateBouns =function(id,myself,enemy) {
      return obj[id](myself,enemy);
 };
-
+var getOne = function(){
+    return Math.random() * 54 | 0;
+}
+module.exports.getOne = getOne;
 module.exports.calculateBouns = calculateBouns;
