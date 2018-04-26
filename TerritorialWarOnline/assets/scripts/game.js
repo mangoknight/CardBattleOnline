@@ -56,6 +56,9 @@ cc.Class({
 		cards: [],
 		selectCard: 0,
 		selectCardNode: cc.Node,
+		confirmTuichu: cc.Node,
+		meData: cc.Node,
+		enData: cc.Node,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -274,6 +277,7 @@ cc.Class({
 		});
         
     },
+	//选中要出的牌
 	clickedCard: function(event){
 		var actionBy = cc.moveTo(2, cc.p(event.target.x,event.target.y+100));
 		event.target.runAction(actionBy);
@@ -281,14 +285,42 @@ cc.Class({
 		this.selectCard=event.target.children[0].id;
 		this.selectCardNode = event.target;
 	},
+	//出牌
 	chupai: function(){
 		socket.emit('chupai',{room: room.id,enemy: en.name,user: my.name,cardid: this.selectCard});
 		
 		var actionBy = cc.moveTo(2, cc.p(-210, -25));
 		this.selectCardNode.runAction(actionBy);
 	},
+	//弃牌
 	qipai: function(){
 		this.selectCardNode.active=false;
+	},
+	//退出房间
+	tuichu: function(){
+		this.confirmTuichu.active=true;
+	},
+	//确认退出
+	confirmtuichu: function(){
+		cc.director.loadScene('Surface');
+		socket.emit('quit',{room: room,which: user});
+	},
+	//取消
+	quxiao: function(){
+		this.confirmTuichu.active=false;
+	},
+	//显示自己信息
+	meNameData: function(){
+		this.meData.active=true;
+	},
+	//对方信息显示
+	enNameData: function(){
+		this.enData.active=true;
+	},
+	//关闭对方信息
+	guanbi: function(){
+		this.enData.active=false;
+		this.meData.active=false;
 	},
 	//每回合更新对战信息
 	roundUp :function(i){

@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "2fea2519-ab9d-4031-be16-a01b1d16dffa",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "弩兵": {
+      "ver": "1.0.3",
+      "uuid": "52ea9a84-b848-4ccc-a97b-1f31f59fd7c9",
+      "rawTextureUuid": "2fea2519-ab9d-4031-be16-a01b1d16dffa",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 163,
+      "height": 215,
+      "rawWidth": 163,
+      "rawHeight": 215,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

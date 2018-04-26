@@ -22,7 +22,7 @@ cc.Class({
       // use this for initialization
     onLoad: function () {
        
-        socket = window.io.connect('http://192.168.1.103:7777');
+        socket = window.io.connect('http://127.0.0.1:7777');
         
         
     },

@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "40a82934-aa7e-4ad6-a8bd-34d055927c88",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "军医": {
+      "ver": "1.0.3",
+      "uuid": "84c15843-0d01-436d-bdeb-f1fb94cc8ba9",
+      "rawTextureUuid": "40a82934-aa7e-4ad6-a8bd-34d055927c88",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 600,
+      "height": 479,
+      "rawWidth": 600,
+      "rawHeight": 479,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

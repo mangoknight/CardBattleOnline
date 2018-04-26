@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "393d62c6-1bd8-499a-8fe3-35e58dc5273f",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "投石车": {
+      "ver": "1.0.3",
+      "uuid": "aecd42c3-8658-47ac-89f8-061c793ba8dc",
+      "rawTextureUuid": "393d62c6-1bd8-499a-8fe3-35e58dc5273f",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 171,
+      "height": 201,
+      "rawWidth": 171,
+      "rawHeight": 201,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

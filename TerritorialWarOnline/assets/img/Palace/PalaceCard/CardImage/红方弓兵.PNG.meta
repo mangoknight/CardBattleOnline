@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "43cb7b68-ea6f-4e1b-aece-64d462d1b9af",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "红方弓兵": {
+      "ver": "1.0.3",
+      "uuid": "fdef6ae7-5d32-4e8e-bc5b-e5ef473ffb69",
+      "rawTextureUuid": "43cb7b68-ea6f-4e1b-aece-64d462d1b9af",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 156,
+      "height": 223,
+      "rawWidth": 156,
+      "rawHeight": 223,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

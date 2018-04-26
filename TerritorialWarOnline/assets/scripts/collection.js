@@ -19,6 +19,8 @@ cc.Class({
 		card8:cc.Node,
 		card9:cc.Node,
 		card10:cc.Node,
+		page:1,
+		
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -80,7 +82,11 @@ cc.Class({
 			this.card9.active=true;
             this.card10.active=true;
 	},
-	
+	next:function(){
+		if(page==1){
+			
+		}
+	},
 	
 
     // update (dt) {},

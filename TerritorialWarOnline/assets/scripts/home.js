@@ -4,28 +4,15 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        // foo: {
-        //     // ATTRIBUTES:
-        //     default: null,        // The default value will be used only when the component attaching
-        //                           // to a node for the first time
-        //     type: cc.SpriteFrame, // optional, default is typeof default
-        //     serializable: true,   // optional, default is true
-        // },
-        // bar: {
-        //     get () {
-        //         return this._bar;
-        //     },
-        //     set (value) {
-        //         this._bar = value;
-        //     }
-        // },
+        myData: cc.Node,
     },
 
     onLoad: function () {
 			var info = JSON.parse(cc.sys.localStorage.getItem("userInfo"));
-			socket = window.io.connect('http://192.168.1.103:7777');
+			socket = window.io.connect('http://127.0.0.1:7777');
 			socket.on('joinOk'+info.user_name,(msg)=>{
 				cc.sys.localStorage.setItem("roomInfo",JSON.stringify(msg.room));
+				cc.sys.localStorage.setItem("meInfo",JSON.stringify(msg.status));
 				cc.director.loadScene('game');
 			});
 			socket.on('wait'+info.user_name,(msg)=>{
@@ -40,7 +27,21 @@ cc.Class({
 			socket.emit('startGame',{user:info});
 			
 	},
-    
-
+	//查看我的信息
+    myselfData: function(){
+		this.myData.active=true;
+	},
+	//关闭我的信息
+	guanbi: function(){
+		this.myData.active=false;
+	},
+	//查看卡牌图鉴
+	chakanCards: function(){
+		cc.director.loadScene('Collection');
+	},
+	//退出游戏至登录
+	exit: function(){
+		cc.director.loadScene('login');
+	},
     // update (dt) {},
 });
