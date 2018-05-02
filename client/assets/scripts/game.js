@@ -64,17 +64,20 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     // onLoad () {},
-    rate : function(win , lose){
+    rate: function(win , lose){
 		return win/(win+lose);
 	},
 	
     onLoad: function () {
-       
-        socket = window.io.connect('http://127.0.0.1:7777');
+       var self=this;
+		var address = JSON.parse(cc.sys.localStorage.getItem("address"));
+        socket = window.io.connect(address);
         var room = JSON.parse(cc.sys.localStorage.getItem("roomInfo"));
 		var me = JSON.parse(cc.sys.localStorage.getItem("userInfo"));
-		var my,en =  JSON.parse(cc.sys.localStorage.getItem("meInfo"));
+		var my =  JSON.parse(cc.sys.localStorage.getItem("meInfo"));
+		var en =  JSON.parse(cc.sys.localStorage.getItem("meInfo"));
 		//对战双方名字、等级、胜场、败场、胜率
+		console.log(my);
 
 	
 		if(me.user== room.user1.user_name){
@@ -82,14 +85,15 @@ cc.Class({
 			this.melevel.string = room.user1.level;
 			this.mewin.string = room.user1.win;
 			this.melose.string = room.user1.lose;
-			this.meRate.string = rate(room.user1.win,room.user1.lose);
+			this.meRate.string = self.rate(room.user1.win,room.user1.lose);
 
 			this.enName.string = room.user2.user_name;
 			this.enlevel.string = room.user2.level;
 			this.enwin.string = room.user2.win;
 			this.enlose.string = room.user2.lose;
-			this.enRate.string = rate(room.user2.win,room.user2.lose);
-			
+			this.enRate.string = self.rate(room.user2.win,room.user2.lose);
+			//初始化回合
+			socket.emit('round0',{room: room});
 			this.user= 1;
 		}else{
 		
@@ -97,13 +101,13 @@ cc.Class({
 			this.melevel.string = room.user2.level;
 			this.mewin.string = room.user2.win;
 			this.melose.string = room.user2.lose;
-			this.meRate.string = room.user2.Rate;
+			this.meRate.string = self.rate(room.user2.win,room.user2.lose);
 
 			this.enName.string = room.user1.user_name;
 			this.enlevel.string = room.user1.level;
 			this.enwin.string = room.user1.win;
 			this.enlose.string = room.user1.lose;
-			this.enRate.string = rate(room.user1.win,room.user2.lose);
+			this.enRate.string = self.rate(room.user1.win,room.user1.lose);
 			
 			this.user= 2;
 		}
@@ -129,17 +133,22 @@ cc.Class({
 		this.enJunshiLevel.string = en.junshiLevel;
 		this.enZhaomu1.string = en.zhaomu1;
 		this.enZhaomu2.string = en.zhaomu2;
-        //初始化回合
-		socket.emit('round0',{room: room});
+        
 		//初始化每人三张卡牌
 		socket.on('card'+room.id+me.user_name,(msg)=>{
-			this.cards = msg;
+			console.log("收到三张牌");
+
+			for(var i=0;i<3;i++){
+				this.cards[i] = msg.i;
+			}
+			console.log(this.cards);
 			var c1;
             var c2;
 			var c3;
-            c1=Cards.Card.fromId(msg[0]);
-            c2=Cards.Card.fromId(msg[1]);
-			c3=Cards.Card.fromId(msg[2]);
+            c1=Cards.Card.fromId(this.cards[0] );
+            c2=Cards.Card.fromId(this.cards[1] );
+			c3=Cards.Card.fromId(this.cards[2] );
+
             console.log(c1);
             var newCard1 = cc.instantiate(this.cardPrefab).getComponent('createCard');
             var newCard2 = cc.instantiate(this.cardPrefab).getComponent('createCard');

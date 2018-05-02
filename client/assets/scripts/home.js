@@ -5,19 +5,23 @@ cc.Class({
 
     properties: {
         myData: cc.Node,
+		rankData: cc.Node,
     },
 
     onLoad: function () {
 			var info = JSON.parse(cc.sys.localStorage.getItem("userInfo"));
-			socket = window.io.connect('http://127.0.0.1:7777');
+			console.log(info);
+			var address = JSON.parse(cc.sys.localStorage.getItem("address"));
+			socket = window.io.connect(address);
 			socket.on('joinOk'+info.user_name,(msg)=>{
 				cc.sys.localStorage.setItem("roomInfo",JSON.stringify(msg.room));
 				cc.sys.localStorage.setItem("meInfo",JSON.stringify(msg.status));
+				console.log(msg.status);
 				cc.director.loadScene('game');
 			});
-			socket.on('wait'+info.user_name,(msg)=>{
-				console.log(msg);
-			})
+			//socket.on('wait'+info.user_name,(msg)=>{
+			//	console.log(msg);
+			//})
 	},
 	start () {
 
@@ -42,6 +46,10 @@ cc.Class({
 	//退出游戏至登录
 	exit: function(){
 		cc.director.loadScene('login');
+	},
+	rank: function(){
+		socket.emit('rank',info.user_name);
+		cc.director.loadScene('rankData');
 	},
     // update (dt) {},
 });

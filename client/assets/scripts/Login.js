@@ -21,14 +21,14 @@ cc.Class({
 
       // use this for initialization
     onLoad: function () {
-       
-        socket = window.io.connect('http://127.0.0.1:7777');
+        
         
         
     },
  
     login: function() {
-        
+        var address = JSON.parse(cc.sys.localStorage.getItem("address"));
+        socket = window.io.connect(address);
         var username =this.userText.string;
 		var pwd =this.pwText.string;
 		
@@ -46,7 +46,7 @@ cc.Class({
             socket.on('loginBack'+username,(msg)=>{
 				if(msg.status){
 					cc.sys.localStorage.setItem("userInfo",JSON.stringify(msg.user));	
-					cc.director.loadScene('Surface');
+					cc.director.loadScene('home');
 				}else{
 					this.error.string = msg.content;
 					this.showError.active=true;

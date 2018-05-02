@@ -26,7 +26,8 @@ cc.Class({
     // use this for initialization
     onLoad: function () {
        
-       socket = window.io.connect('http://127.0.0.1:7777');
+       var address = JSON.parse(cc.sys.localStorage.getItem("address"));
+        socket = window.io.connect(address);
         
         
     },
@@ -40,6 +41,7 @@ cc.Class({
 		var pwd=this.pwText.string;
 		var cfpwd =	this.cfPwText.string;
 		var map={name:username,pwd:pwd};
+		//判断帐号密码是否有误
 		if(pwd!=cfpwd){
 			this.error.string="密码和确认密码不一致！";	
 			this.showError.active=true;
@@ -59,7 +61,7 @@ cc.Class({
 			socket.on('success'+username,(msg)=>{
 					this.error.string="注册成功！"
 					this.showError.active=true;
-				var timeCallback = function () {
+				var timeCallback = function () {  //2秒后跳转
 						
                         cc.director.loadScene('login');   
                     }
@@ -67,6 +69,7 @@ cc.Class({
 			
 			
 		});	
+			//接收注册失败信息
 			socket.on('fail'+username,(msg)=>{
 				this.error.string = msg.content;
 				this.showError.active=true;

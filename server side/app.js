@@ -87,32 +87,32 @@ io.on('connection', function (socket) {
         console.log(back);//初始化个人属性
         var zhuangtai = {name:msg.user.name,room:back.id,cityLevel:0,
           junshiLevel:0,HP:10,defence:10,people:10,peopleAdd:1,money:0,moneyAdd:2,zhaomu1:0,zhaomu2:0};
-        redis.set("info"+msg.user.user_name+back.id,JSON.stringify(zhuangtai),
-        (error, res) => {
-                  if (error) {
-                      console.log(error);
-                  } else {
+        redis.set("info"+msg.user.user_name+back.id,JSON.stringify(zhuangtai));
+        // (error, res) => {
+        //           if (error) {
+        //               console.log(error);
+        //           } else {
                       
                       socket.emit('joinOk'+back.user1.user_name,{room:back,status:zhuangtai});
                       socket.emit('joinOk'+back.user2.user_name,{room:back,status:zhuangtai});
-                  }
+        //           }
         });
-      });
+      
     } else {
       console.log('newroom');
       room.newRoom(msg.user, (back1) => {
         console.log(back1);
         var zhuangtai = {name:msg.user.name,room:back1.id,cityLevel:0,
           junshiLevel:0,HP:10,defence:10,people:10,peopleAdd:1,money:0,moneyAdd:2,zhaomu1:0,zhaomu2:0};
-        redis.set("info"+msg.user.user_name+back1.id,JSON.stringify(zhuangtai),
-        (error, res) => {
-                  if (error) {
-                      console.log(error);
-                  } else {
+        redis.set("info"+msg.user.user_name+back1.id,JSON.stringify(zhuangtai));
+        // (error, res) => {
+        //           if (error) {
+        //               console.log(error);
+        //           } else {
                       
-                    socket.emit('wait'+msg.user.user_name,{room:back1,status:zhuangtai});
-                  }
-        });
+        //             socket.emit('wait'+msg.user.user_name,{room:back1,status:zhuangtai});
+        //           }
+        // });
         
       })
     }
