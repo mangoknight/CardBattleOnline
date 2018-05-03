@@ -59,6 +59,8 @@ cc.Class({
 		confirmTuichu: cc.Node,
 		meData: cc.Node,
 		enData: cc.Node,
+		qipaiBtn: cc.Node,
+		chupaiBtn: cc.Node,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -284,7 +286,24 @@ cc.Class({
 				this.meCard5.active=true;
 			}
 		});
-        
+		// 监听服务端计算牌生效后的结果 并在界面上展示
+		socket.on("endpai",(msg)=>{
+			this.qipaiBtn.active=false;
+			this.chupaiBtn.active=false;
+		});
+		//监听服务端有弃牌的 无论双方谁弃牌都在战斗界面中间显示 弃牌 
+		socket.on("endqipai",(msg)=>{
+			this.qipaiBtn.active=false;
+			this.chupaiBtn.active=false;
+		});
+		// 监听服务端发回的 牌因为资源人口不足	没有生效 并显示错误原因。
+		socket.on("cardFail",(msg)=>{
+			
+		});
+		//游戏结束
+        socket.on("gameover",(msg)=>{
+			
+		});
     },
 	//选中要出的牌
 	clickedCard: function(event){
@@ -292,6 +311,7 @@ cc.Class({
 		event.target.runAction(actionBy);
 		
 		this.selectCard=event.target.children[0].id;
+		console.log(this.selectCard);
 		this.selectCardNode = event.target;
 	},
 	//出牌
@@ -300,6 +320,7 @@ cc.Class({
 		
 		var actionBy = cc.moveTo(2, cc.p(-210, -25));
 		this.selectCardNode.runAction(actionBy);
+		
 	},
 	//弃牌
 	qipai: function(){
@@ -335,7 +356,7 @@ cc.Class({
 	roundUp :function(i){
 		//告诉服务端 回合开始 发送roundUp 请求发1牌
 		this.round=i;
-		if(this.round%2==1){
+		if(i%2==1){
 			if(this.user==1){
 			
 				socket.emit('roundUp',{round: this.round,user1:room.user1.user_name,user2:room.user2.user_name,roomid: room.id});
