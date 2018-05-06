@@ -1,4 +1,6 @@
 var socket;
+var CreateCards = require('createCard');
+var Cards = require('cards');
 cc.Class({
     extends: cc.Component,
 
@@ -79,10 +81,9 @@ cc.Class({
 		var my =  JSON.parse(cc.sys.localStorage.getItem("meInfo"));
 		var en =  JSON.parse(cc.sys.localStorage.getItem("meInfo"));
 		//对战双方名字、等级、胜场、败场、胜率
-		console.log(my);
-
-	
-		if(me.user== room.user1.user_name){
+		console.log(me);
+		if(me.user_name== room.user1.user_name){
+			console.log("我是第一个");
 			this.meName.string = room.user1.user_name;
 			this.melevel.string = room.user1.level;
 			this.mewin.string = room.user1.win;
@@ -96,6 +97,7 @@ cc.Class({
 			this.enRate.string = self.rate(room.user2.win,room.user2.lose);
 			//初始化回合
 			socket.emit('round0',{room: room});
+			
 			this.user= 1;
 		}else{
 		
@@ -138,10 +140,9 @@ cc.Class({
         
 		//初始化每人三张卡牌
 		socket.on('card'+room.id+me.user_name,(msg)=>{
-			console.log("收到三张牌");
-
+			
 			for(var i=0;i<3;i++){
-				this.cards[i] = msg.i;
+				this.cards[i] = msg[i];
 			}
 			console.log(this.cards);
 			var c1;
@@ -152,9 +153,9 @@ cc.Class({
 			c3=Cards.Card.fromId(this.cards[2] );
 
             console.log(c1);
-            var newCard1 = cc.instantiate(this.cardPrefab).getComponent('createCard');
-            var newCard2 = cc.instantiate(this.cardPrefab).getComponent('createCard');
-			var newCard3 = cc.instantiate(this.cardPrefab).getComponent('createCard');
+            var newCard1 = cc.instantiate(this.meCardPrefab).getComponent('createCard');
+            var newCard2 = cc.instantiate(this.meCardPrefab).getComponent('createCard');
+			var newCard3 = cc.instantiate(this.meCardPrefab).getComponent('createCard');
             this.meCard1.addChild(newCard1.node);
             this.meCard2.addChild(newCard2.node);
 			this.meCard3.addChild(newCard3.node);
@@ -164,7 +165,7 @@ cc.Class({
             this.meCard1.active=true;
             this.meCard2.active=true;
 			this.meCard3.active=true;
-			roundUp(1);
+			this.roundUp(1);
 		});
 		//更新每回合双方信息
 		socket.on('updateProperty'+room.id,(msg)=>{
@@ -191,6 +192,10 @@ cc.Class({
 			this.enJunshiLevel.string = msg.user2.junshiLevel;
 			this.enZhaomu1.string = msg.user2.zhaomu1;
 			this.enZhaomu2.string = msg.user2.zhaomu2;
+			if(msg.round%2==1){
+				this.qipaiBtn.active = true;
+				this.chupaiBtn.active = true;
+			}
 		}else{
 			this.meBlood.string = msg.user2.HP;
 			this.meMoney.string = msg.user2.money;
@@ -217,7 +222,7 @@ cc.Class({
 		});
 		//判断对方牌的数量 ,并显示对方卡牌数
 		socket.on("addCard"+room.id,(msg)=>{
-			if(msg.user!=me.user){
+			if(msg.user!=me.user_name){
 				if(msg.len==1){
 					this.enCard1.active=true;
 					this.enCard2.active=false;
@@ -254,33 +259,34 @@ cc.Class({
 			}
 		});
 		//每回合抽一张卡牌
-		socket.on("OneCardBack"+me.user,(msg)=>{
-			cards.push(msg);
+		socket.on("OneCardBack"+me.user_name,(msg)=>{
+			console.log("收到一张牌："+msg);
+			this.cards.push(msg);
 			var c4;
 			c4=Cards.Card.fromId(msg);
-			var newCard4 = cc.instantiate(this.cardPrefab).getComponent('createCard');
+			var newCard4 = cc.instantiate(this.meCardPrefab).getComponent('createCard');
 			
-			if(cards.length==1){
+			if(this.cards.length==1){
 				this.meCard1.addChild(newCard4.node);
 				newCard4.init(c4);
 				this.meCard1.active=true;
 			}
-			else if(cards.length==2){
+			else if(this.cards.length==2){
 				this.meCard2.addChild(newCard4.node);
 				newCard4.init(c4);
 				this.meCard2.active=true;
 			}
-			else if(cards.length==3){
+			else if(this.cards.length==3){
 				this.meCard3.addChild(newCard4.node);
 				newCard4.init(c4);
 				this.meCard3.active=true;
 			}
-			else if(cards.length==4){
+			else if(this.cards.length==4){
 				this.meCard4.addChild(newCard4.node);
 				newCard4.init(c4);
 				this.meCard4.active=true;
 			}
-			else if(cards.length==5){
+			else if(this.cards.length==5){
 				this.meCard5.addChild(newCard4.node);
 				newCard4.init(c4);
 				this.meCard5.active=true;
@@ -354,19 +360,23 @@ cc.Class({
 	},
 	//每回合更新对战信息
 	roundUp :function(i){
+		var room = JSON.parse(cc.sys.localStorage.getItem("roomInfo"));
+		var me = JSON.parse(cc.sys.localStorage.getItem("userInfo"));
+		console.log("第"+i+"回合");
 		//告诉服务端 回合开始 发送roundUp 请求发1牌
 		this.round=i;
 		if(i%2==1){
 			if(this.user==1){
-			
+				console.log("第一个人请求发牌");
 				socket.emit('roundUp',{round: this.round,user1:room.user1.user_name,user2:room.user2.user_name,roomid: room.id});
-				socket.emit('fapai',{room: room.id,user: me.user});
+				socket.emit('fapai',{room: room.id,user: me.user_name});
 			}
 			
 		}else{
 			if(this.user==2){
-			
+				console.log("第2个人请求发牌");
 				socket.emit('roundUp',{round: this.round,user1:room.user1.user_name,user2:room.user2.user_name,roomid: room.id});
+				socket.emit('fapai',{room: room.id,user: me.user_name});
 			}
 		}
 		

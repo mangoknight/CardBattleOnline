@@ -92,9 +92,9 @@ io.on('connection', function (socket) {
         //           if (error) {
         //               console.log(error);
         //           } else {
-                      
-                      socket.emit('joinOk'+back.user1.user_name,{room:back,status:zhuangtai});
-                      socket.emit('joinOk'+back.user2.user_name,{room:back,status:zhuangtai});
+        console.log(back.user1.user_name);              
+        io.emit('joinOk'+back.user1.user_name,{room:back,status:zhuangtai});
+        socket.emit('joinOk'+back.user2.user_name,{room:back,status:zhuangtai});
         //           }
         });
       
@@ -110,7 +110,7 @@ io.on('connection', function (socket) {
         //               console.log(error);
         //           } else {
                       
-        //             socket.emit('wait'+msg.user.user_name,{room:back1,status:zhuangtai});
+                    socket.emit('wait'+msg.user.user_name,{room:back1,status:zhuangtai});
         //           }
         // });
         
@@ -118,19 +118,22 @@ io.on('connection', function (socket) {
     }
   });
   socket.on('round0',(msg)=>{
-    var a1 = new Array();
+    console.log('第一回合发三张牌');
+    var a1 ={};
     for(var i= 0;i<3;i++){
       a1[i]=ccc.getOne();
     }
+    
     console.log(a1);
-    redis.set("card"+msg.room.id+msg.room.user1,a1);
-    socket.emit("card"+msg.room.id+msg.room.user1,a1);
-    var a2 = new Array();
+    redis.set("card"+msg.room.id+msg.room.user1.user_name,JSON.stringify(a1));
+    socket.emit("card"+msg.room.id+msg.room.user1.user_name,a1);
+    var a2 = {};
     for(var i= 0;i<3;i++){
       a2[i]=ccc.getOne();
     }
-    redis.set("card"+msg.room.id+msg.room.user2,a2);
-    socket.emit("card"+msg.room.id+msg.room.user2,a2);
+    console.log(a2);
+    redis.set("card"+msg.room.id+msg.room.user2.user_name,JSON.stringify(a2));
+    io.emit("card"+msg.room.id+msg.room.user2.user_name,a2);
   });
   //出牌对战
   socket.on('chupai',(msg)=>{
@@ -178,8 +181,14 @@ io.on('connection', function (socket) {
       //
     }
   });
+  socket.on("qipai",(msg)=>{
+    //room id ,user , cardid 
+    var cards = redis.get("card"+msg.roomid+msg.user);
+
+  })
   //升级属性
   socket.on("roundUp",(msg)=>{
+    console.log(msg);
     //回合数，房间信息
     var user1 = redis.get("info"+msg.user1+msg.roomid);
     var user2 = redis.get("info"+msg.user2+msg.roomid);
@@ -194,18 +203,32 @@ io.on('connection', function (socket) {
     user2.money+=user2.moneyAdd;
     user2.people+=user2.peopleAdd;
     //
-    socket.emit("updateProperty"+msg.roomid,{user1: user1,user2:user2});
+    socket.emit("updateProperty"+msg.roomid,{round:msg.round,user1: user1,user2:user2});
     
   });
   //发牌
   socket.on("fapai",(msg)=>{
+    console.log(msg);
     var card1 = ccc.getOne();
-    var cards = redis.get("card"+msg.roomid+msg.user);
-    cards.push(card1);
-    redis.set("card"+msg.roomid+msg.user,cards);
-    var len = cards.length;
-    socket.emit("OneCardBack"+msg.user,card1);
-    socket.emit('addCard'+msg.roomid,{user:msg.user,len:len});
+    //var cards=[];
+    redis.get("card"+msg.room+msg.user,(e,r)=>{
+      r=JSON.parse(r);
+      
+      r[Object.keys(r).length+1]=card1;
+      
+      console.log(r);
+      //cards
+      redis.set("card"+msg.roomid+msg.user,JSON.stringify(r));
+      var len = Object.keys(r).length;
+      socket.emit("OneCardBack"+msg.user,card1);
+      io.emit('addCard'+msg.roomid,{user:msg.user,len:len});
+    });
+   
+    // cards = JSON.parse(cards); 
+  
+    // cards.push(card1);
+    // redis.set("card"+msg.roomid+msg.user,cards);
+    
   });
   //主界面聊天
   socket.on('chat',(msg)=>{
@@ -214,10 +237,10 @@ io.on('connection', function (socket) {
   });
   //排行榜
   socket.on('rank',(msg)=>{
-    
+    console.log(msg);
     var select = new sqlcmd.Select('user', ['user_name','user_win','user_lose']).OrderBy({user_win:false}).query;
     sqlcmd.Doit(select, (a, b) => {
-      
+      console.log(b);
       socket.emit('rankBack',b);
     });
   });
