@@ -15,7 +15,8 @@ cc.Class({
     onLoad: function () {
        
         
-        address = 'http://192.168.1.109:7777';
+        //address = 'http://192.168.1.109:7777';
+		 address = 'http://127.0.0.1:7777';
         cc.sys.localStorage.setItem("address",JSON.stringify(address));	
     },
  

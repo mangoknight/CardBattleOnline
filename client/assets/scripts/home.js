@@ -6,6 +6,10 @@ cc.Class({
     properties: {
         myData: cc.Node,
 		rankData: cc.Node,
+		load: cc.Node,
+		point: cc.Label,
+		loadLabel: cc.Label,
+		pointN: cc.Node,
     },
 
     onLoad: function () {
@@ -14,6 +18,8 @@ cc.Class({
 			var address = JSON.parse(cc.sys.localStorage.getItem("address"));
 			socket = window.io.connect(address);
 			socket.on('joinOk'+info.user_name,(msg)=>{
+				this.loadLabel.string = "匹配成功";
+				this.pointN.active = false;
 				cc.sys.localStorage.setItem("roomInfo",JSON.stringify(msg.room));
 				cc.sys.localStorage.setItem("meInfo",JSON.stringify(msg.status));
 				console.log(msg.status);
@@ -27,6 +33,20 @@ cc.Class({
 
     },
 	startGame: function(){
+			this.load.active = true;
+			var x= 0;
+			var onePoint = function () {
+				if(x>=3){
+					x=0;
+					this.point.string = ""; 
+				}else{
+					x+=1;
+					this.point.string += "。"; 
+				}				
+                
+            }
+            this.schedule(onePoint,1, 20, 2);
+			
 			var info = JSON.parse(cc.sys.localStorage.getItem("userInfo"));
 			socket.emit('startGame',{user:info});
 			
