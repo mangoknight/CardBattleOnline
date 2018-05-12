@@ -18,6 +18,7 @@ cc.Class({
             default: [],
             type: cc.SpriteFrame
         },
+		cardId:cc.Label,
     },
   
     //初始化
@@ -27,6 +28,7 @@ cc.Class({
 		this.effect.string = card.effect;
 		this.img.spriteFrame = this.cardImg[card.id];
 		this.border.spriteFrame = this.cardBorder[0];
+		this.cardId.string = card.id;
         
     },
 	//翻牌

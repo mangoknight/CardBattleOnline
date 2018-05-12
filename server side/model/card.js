@@ -1,4 +1,3 @@
-
 // name:
 // room:
 // cityLevel:
@@ -18,7 +17,7 @@ var obj = {
             myself.people -= 1;
             var result=Calculation1(1,0,enemy.defence,enemy.HP,enemy.money);
             enemy.defence = result.defence;
-            enemy.HP = result.hp;
+            enemy.HP = result.HP;
             return {status:true,myself:myself,enemy:enemy};
         }else{
             return {status:false,info:"人口不足"};
@@ -29,7 +28,7 @@ var obj = {
             myself.people -= 2;
             var result=Calculation1(2,0,enemy.defence,enemy.HP,enemy.money);
             enemy.defence = result.defence;
-            enemy.HP = result.hp;
+            enemy.HP = result.HP;
             return {status:true,myself:myself,enemy:enemy};
         }else{
             return {status:false,info:"人口不足"};
@@ -40,7 +39,7 @@ var obj = {
             myself.people -= 4;
             var result=Calculation1(3,2,enemy.defence,enemy.HP,enemy.money);
             enemy.defence = result.defence;
-            enemy.HP = result.hp;
+            enemy.HP = result.HP;
             enemy.money -= result.money;
             return {status:true,myself:myself,enemy:enemy};
         }else{
@@ -52,7 +51,7 @@ var obj = {
             myself.people -= 3;
             var result=Calculation1(3,0,enemy.defence,enemy.HP,enemy.money);
             enemy.defence = result.defence;
-            enemy.HP = result.hp;
+            enemy.HP = result.HP;
             return {status:true,myself:myself,enemy:enemy};
         }else{
             return {status:false,info:"人口不足"};
@@ -63,7 +62,7 @@ var obj = {
             myself.people -= 5;
             var result=Calculation1(4,3,enemy.defence,enemy.HP,enemy.money);
             enemy.defence = result.defence;
-            enemy.HP = result.hp;
+            enemy.HP = result.HP;
             enemy.money =result.money;
             return {status:true,myself:myself,enemy:enemy};
         }else{
@@ -75,7 +74,7 @@ var obj = {
             myself.money -= 3;
             var result=Calculation1(1,0,enemy.defence,enemy.HP,enemy.money);
             enemy.defence = result.defence;
-            enemy.HP = result.hp;
+            enemy.HP = result.HP;
             return {status:true,myself:myself,enemy:enemy};
         }else{
             return {status:false,info:"金币不足"};
@@ -86,7 +85,7 @@ var obj = {
             myself.people -= 7;
             var result=Calculation1(6,5,enemy.defence,enemy.HP,enemy.money);
             enemy.defence = result.defence;
-            enemy.HP = result.hp;
+            enemy.HP = result.HP;
             enemy.money = result.money;
             return {status:true,myself:myself,enemy:enemy};
         }else{
@@ -97,7 +96,7 @@ var obj = {
         if(myself.people>1){
             myself.people -= 2;
             var result=Calculation2(2,0,enemy.HP,enemy.people);
-            enemy.HP = result.hp;
+            enemy.HP = result.HP;
             enemy.people = result.people;
             return {status:true,myself:myself,enemy:enemy};
         }else{
@@ -108,7 +107,7 @@ var obj = {
         if(myself.people>0){
             myself.people -= 1;
             var result=Calculation2(1,0,enemy.HP,enemy.people);
-            enemy.HP = result.hp;
+            enemy.HP = result.HP;
             enemy.people = result.people;
             return {status:true,myself:myself,enemy:enemy};
         }else{
@@ -119,7 +118,7 @@ var obj = {
         if(myself.people>2){
             myself.people -= 3;
             var result=Calculation2(3,0,enemy.HP,enemy.people);
-            enemy.HP = result.hp;
+            enemy.HP = result.HP;
             enemy.people = result.people;
             return {status:true,myself:myself,enemy:enemy};
         }else{
@@ -130,7 +129,7 @@ var obj = {
         if(myself.people>4){
             myself.people -= 5;
             var result=Calculation2(4,0,enemy.HP,enemy.people);
-            enemy.HP = result.hp;
+            enemy.HP = result.HP;
             enemy.people = result.people;
             return {status:true,myself:myself,enemy:enemy};
         }else{
@@ -141,7 +140,7 @@ var obj = {
         if(myself.people>3){
             myself.people -= 4;
             var result=Calculation2(2,1,enemy.HP,enemy.people);
-            enemy.HP = result.hp;
+            enemy.HP = result.HP;
             enemy.people = result.people;
             return {status:true,myself:myself,enemy:enemy};
         }else{
@@ -152,7 +151,7 @@ var obj = {
         if(myself.people>5){
             myself.people -= 6;
             var result=Calculation2(4,2,enemy.HP,enemy.people);
-            enemy.HP = result.hp;
+            enemy.HP = result.HP;
             enemy.people = result.people;
             return {status:true,myself:myself,enemy:enemy};
         }else{
@@ -164,7 +163,7 @@ var obj = {
             myself.people -= 2;
             var result=Calculation3(1,enemy.defence,enemy.HP);
             enemy.defence = result.defence;
-            enemy.HP = result.hp;
+            enemy.HP = result.HP;
             return {status:true,myself:myself,enemy:enemy};
         }else{
             return {status:false,info:"人口不足"};
@@ -175,7 +174,7 @@ var obj = {
             myself.people -= 3;
             var result=Calculation3(2,enemy.defence,enemy.HP);
             enemy.defence = result.defence;
-            enemy.HP = result.hp;
+            enemy.HP = result.HP;
             return {status:true,myself:myself,enemy:enemy};
         }else{
             return {status:false,info:"人口不足"};
@@ -186,7 +185,7 @@ var obj = {
             myself.people -= 5;
             var result=Calculation3(3,enemy.defence,enemy.HP);
             enemy.defence = result.defence;
-            enemy.HP = result.hp;
+            enemy.HP = result.HP;
             return {status:true,myself:myself,enemy:enemy};
         }else{
             return {status:false,info:"人口不足"};
@@ -207,7 +206,7 @@ var obj = {
             myself.people -= 7;
             myself.money -= 12;
             var result = Calculation2(8,5,enemy.HP,enemy.people);
-            enemy.HP = result.hp;
+            enemy.HP = result.HP;
             enemy.people = result.people;
             return {status:true,myself:myself,enemy:enemy};
         }else{
@@ -219,7 +218,7 @@ var obj = {
             myself.people -= 5;
             myself.money -=10;
             var result = Calculation2(7,0,enemy.HP,enemy.people);
-            enemy.HP = result.hp;
+            enemy.HP = result.HP;
             return {status:true,myself:myself,enemy:enemy};
         }else{
             return {status:false,info:"金币或人口不足"};
@@ -562,28 +561,28 @@ var obj = {
 };
 
 //近战类伤害结果计算(防御血量伤害，金钱伤害，防御，血量，金钱)
-function Calculation1(injure1,injure2,defence,hP,money){
+function Calculation1(injure1,injure2,defence,HP,money){
     if(injure1<=defence){
         defence -=injure1;
     }else{
         injure1=injure1-defence;
-        hp = hpCount(injure1,hp);
+        HP = hpCount(injure1,HP);
         defence=0;
     }
     money = moneyCount(injure2,money);
-    return {defence :defence,hp: hp,money:money};
+    return {defence :defence,HP: HP,money:money};
 }
 //远程战斗类（血量伤害，人口伤害，血量，人口）
-function Calculation2(injure1,injure2,hp,people){
-    hp = hpCount(injure1,hp);
+function Calculation2(injure1,injure2,HP,people){
+    HP = hpCount(injure1,HP);
     people = peopleCount(injure2,people);
-    return {hp: hp,people: people};
+    return {HP: HP,people: people};
 }
 //贯穿伤害类（伤害，防御，血量）
-function Calculation3(injure,defence,hp){
+function Calculation3(injure,defence,HP){
     defence = defenceCount(injure,defence);
-    hp = hpCount(injure,hp);
-    return {defence: defence,hp: hp};
+    HP = hpCount(injure,HP);
+    return {defence: defence,HP: HP};
 }
 //招募位置判断
 function Recruit(zhaomu,zhaomu1,zhaomu2){
@@ -628,13 +627,13 @@ function defenceCount(injure,defence){
     return defence;
 }
 //计算对血量是否溢出
-function hpCount(injure,hp){
-    if(hp>injure){
-        hp -=injure;
+function hpCount(injure,HP){
+    if(HP>injure){
+        HP -=injure;
     }else{
-        hp = 0;
+        HP = 0;
     }
-    return hp;
+    return HP;
 }
 //计算对金币是否溢出
 function moneyCount(injure,money){
@@ -656,10 +655,23 @@ function peopleCount(injure,people){
 }
 //总调用
 var calculateBouns =function(level,myself,enemy) {
-    return obj[level](myself,enemy);
+    
+    return obj[level+1](myself,enemy);
 };
 var getOne = function(){
     return Math.random() * 54 | 0;
 }
+var removeByValue = function(cards,id){
+    console.log(cards);
+    console.log(id);
+    for(var key in cards){
+        if(cards[key]==id){
+            delete cards[key];
+            console.log(cards);
+        }
+    }
+    return cards;
+}
 module.exports.calculateBouns = calculateBouns;
 module.exports.getOne=getOne;
+module.exports.removeByValue=removeByValue;

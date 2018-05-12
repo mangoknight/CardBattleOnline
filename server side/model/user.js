@@ -15,11 +15,11 @@ function userinfo(username,callback){
 function dieOrAlive(myself,enemy){
     var info ;
     if(myself.HP <=0){
-        info = {result:false,name:myself.name};
-    }else if(enemy.HP){
-        info = {result:false,name:enemy.name};
+        info = {result:false,name:1};
+    }else if(enemy.HP<=0){
+        info = {result:false,name:2};
     }else{
-        info = {result:true,name:""};
+        info = {result:true,name:0};
     }
     return info;
 }

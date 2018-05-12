@@ -137,37 +137,51 @@ io.on('connection', function (socket) {
   });
   //出牌对战
   socket.on('chupai',(msg)=>{
-    
-
+    console.log(msg);
+    var enemy,myself;
     //msg : roomid enemy(name) user(name)  card.id  
-    var myself = redis.get("info"+msg.user+msg.roomid);
-    var enemy =redis.get("info"+msg.enemy+msg.roomid);
-    var cards = redis.get("card"+msg.roomid+msg.user);
-    var result = ccc.calculateBouns(msg.cardid,myself,enemy);
-    if(result.status){
-      removeByValue(cards, msg.cardid);
-      redis.set("card"+msg.roomid+msg.user,cards);
-      //判断有没有猛将 再多减一点伤害
-
-      //判断有没有死的
-      var die = user.dieOrAlive(myself,enemy);
-      if(die.result){//如果没死的，游戏继续，更新redis，发回客户端
-        redis.set("info"+msg.user+msg.roomid,result.myself);
-        redis.set("info"+msg.enemy+msg.roomid,result.enemy);
-        socket.emit("endpai"+enemy.name,result.enemy);
-        socket.emit("endpai"+myself.name,result.myself);      
-      }else{//如果有死的，清除redis，给失败的发送失败消息，胜利的接收胜利消息 ，
-        redis.del("info"+msg.user+msg.roomid);
-        redis.del("info"+msg.enemy+msg.roomid);
-        redis.del("card"+msg.roomid+msg.user);
-        redis.del("card"+msg.roomid+msg.enemy);
-        socket.emit("GameOver"+msg.roomid,{room:msg.roomid,lost:die.name});
-        
-      }
-     
-    }else{
-      socket.emit("cardFail"+msg.user,result);
-    }
+    redis.get("info"+msg.user+msg.room,(e,r)=>{
+      myself=JSON.parse(r);
+      redis.get("info"+msg.enemy+msg.room,(e1,r1)=>{
+        enemy=JSON.parse(r1);
+        var cards;
+        redis.get("card"+msg.room+msg.user,(e2,r2)=>{
+          cards=JSON.parse(r2);
+          var result = ccc.calculateBouns(msg.cardid,myself,enemy);
+          console.log(result);
+              if(result.status){
+                var car = ccc.removeByValue(cards, msg.cardid);
+                var len = Object.keys(car).length;
+                redis.set("card"+msg.room+msg.user,JSON.stringify(car));
+                //判断有没有猛将 再多减一点伤害
+                
+                //判断有没有死的
+                var die = user.dieOrAlive(myself,enemy);
+                console.log(die);
+                if(die.result){//如果没死的，游戏继续，更新redis，发回客户端
+                  redis.set("info"+msg.user+msg.room,JSON.stringify(result.myself));
+                  redis.set("info"+msg.enemy+msg.room,JSON.stringify(result.enemy));
+                  console.log(msg.user);
+                  io.emit("endpai"+msg.room,{myself:result.myself,enemy:result.enemy,host:msg.user});
+                  io.emit("addCard"+msg.room,{user:msg.user,len:len}) 
+                }else{//如果有死的，清除redis，给失败的发送失败消息，胜利的接收胜利消息 ，
+                  redis.del("info"+msg.user+msg.room);
+                  redis.del("info"+msg.enemy+msg.room);
+                  redis.del("card"+msg.room+msg.user);
+                  redis.del("card"+msg.room+msg.enemy);
+                  socket.emit("GameOver"+msg.room,{room:msg.room,lost:die.name});
+                  
+                }
+               
+              }else{
+                socket.emit("cardFail"+msg.user,result);
+              }
+        });
+      });
+    });
+    
+    
+   
 
   });
   //退房
@@ -188,22 +202,36 @@ io.on('connection', function (socket) {
   })
   //升级属性
   socket.on("roundUp",(msg)=>{
-    console.log(msg);
+    console.log("第"+msg.round+"回合");
+   
     //回合数，房间信息
-    var user1 = redis.get("info"+msg.user1+msg.roomid);
-    var user2 = redis.get("info"+msg.user2+msg.roomid);
+    redis.get("info"+msg.user1+msg.roomid,(e1,r1)=>{
+      r1 = JSON.parse(r1);
+      r1.money+=r1.moneyAdd;
+      r1.people+=r1.peopleAdd;
+      
+       console.log(r1);
+      redis.set("info"+msg.user1+msg.roomid,JSON.stringify(r1));
+      io.emit("updateProperty"+msg.user1,{round:msg.round,user1:r1});
+    });
+
+    redis.get("info"+msg.user2+msg.roomid,(e2,r2)=>{
+      r2 = JSON.parse(r2);
+      r2.money+=r2.moneyAdd;
+      r2.people+=r2.peopleAdd;
+       u2 = r2;
+      redis.set("info"+msg.user2+msg.roomid,JSON.stringify(r2));
+      io.emit("updateProperty"+msg.user2,{round:msg.round,user1:r2});
+    });
+    
     //判断智将卡 每次防御+1
     //user1.moneyAdd +=1;
     //user1.peopleAdd+=1;
     // user2.moneyAdd +=1;
     // user2.peopleAdd+=1;
-    user1.money+=user1.moneyAdd;
-    user1.people+=user1.peopleAdd;
-    
-    user2.money+=user2.moneyAdd;
-    user2.people+=user2.peopleAdd;
+   
     //
-    socket.emit("updateProperty"+msg.roomid,{round:msg.round,user1: user1,user2:user2});
+    
     
   });
   //发牌
@@ -218,10 +246,10 @@ io.on('connection', function (socket) {
       
       console.log(r);
       //cards
-      redis.set("card"+msg.roomid+msg.user,JSON.stringify(r));
+      redis.set("card"+msg.room+msg.user,JSON.stringify(r));
       var len = Object.keys(r).length;
       socket.emit("OneCardBack"+msg.user,card1);
-      io.emit('addCard'+msg.roomid,{user:msg.user,len:len});
+      io.emit('addCard'+msg.room,{user:msg.user,len:len});
     });
    
     // cards = JSON.parse(cards); 
