@@ -63,8 +63,14 @@ cc.Class({
 		enData: cc.Node,
 		qipaiBtn: cc.Node,
 		chupaiBtn: cc.Node,
-		flag:0,
-		cs:[],
+		flag: 0,
+		cs: [],
+		roundLabel: cc.Label,
+		roundNode: cc.Node,
+		centerCard: cc.Node,
+		endRound: cc.Node,
+		cardFailDetialNode:cc.Node,
+		cardFailDetial:cc.Label,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -75,14 +81,14 @@ cc.Class({
 	},
 	
     onLoad: function () {
-		this.cs = [0,0,0,0,0];
-		var self=this;
+       var self=this;
+	   this.cs=[0,0,0,0,0];
 		var address = JSON.parse(cc.sys.localStorage.getItem("address"));
         socket = window.io.connect(address);
         var room = JSON.parse(cc.sys.localStorage.getItem("roomInfo"));
+		var my =JSON.parse(cc.sys.localStorage.getItem("meInfo"));
+		var en =JSON.parse(cc.sys.localStorage.getItem("meInfo"));
 		var me = JSON.parse(cc.sys.localStorage.getItem("userInfo"));
-		var my =  JSON.parse(cc.sys.localStorage.getItem("meInfo"));
-		var en =  JSON.parse(cc.sys.localStorage.getItem("meInfo"));
 		//对战双方名字、等级、胜场、败场、胜率
 		console.log(me);
 		if(me.user_name== room.user1.user_name){
@@ -168,11 +174,17 @@ cc.Class({
             this.meCard1.active=true;
             this.meCard2.active=true;
 			this.meCard3.active=true;
-			this.cs=[1,1,1,0,0];
 			this.roundUp(1);
+			this.cs[0]=1;
+			this.cs[1]=1;
+			this.cs[2]=1;
+			console.log(this.cs);
 		});
 		//更新每回合双方信息
 		socket.on('updateProperty'+room.user1.user_name,(msg)=>{
+			this.round=msg.round;
+			this.roundLabel.string="Round"+msg.round;
+			this.roundNode.active=true;
 			console.log(msg);
 			if(this.user== 1){
 			this.meBlood.string = msg.user1.HP;
@@ -189,6 +201,7 @@ cc.Class({
 			if(msg.round%2==1){
 				this.qipaiBtn.active = true;
 				this.chupaiBtn.active = true;
+				this.endRound.active = true;
 			}
 		}else{
 			this.enBlood.string = msg.user1.HP; 
@@ -204,6 +217,9 @@ cc.Class({
 		}
 		});
 		socket.on('updateProperty'+room.user2.user_name,(msg)=>{
+			this.round=msg.round;
+			this.roundLabel.string="Round"+msg.round;
+			this.roundNode.active=true;
 			console.log(msg);
 			if(this.user== 2){
 			this.meBlood.string = msg.user1.HP;
@@ -215,10 +231,13 @@ cc.Class({
 			this.meCityLevel.string = msg.user1.cityLevel;
 			this.meJunshiLevel.string = msg.user1.junshiLevel;
 			this.meZhaomu1.string = msg.user1.zhaomu1;
-			this.meZhaomu2.string = msg.user1.zhaomu2;
-
-			
-		}else{
+			this.meZhaomu2.string = msg.user1.zhaomu2;	
+			if(msg.round%2==0){
+				this.qipaiBtn.active = true;
+				this.chupaiBtn.active = true;
+				this.endRound.active = true;
+			}
+			}else{
 			this.enBlood.string = msg.user1.HP;
 			this.enMoney.string = msg.user1.money;
 			this.enMoneyAdd.string = msg.user1.moneyAdd;
@@ -229,11 +248,11 @@ cc.Class({
 			this.enJunshiLevel.string = msg.user1.junshiLevel;
 			this.enZhaomu1.string = msg.user1.zhaomu1;
 			this.enZhaomu2.string = msg.user1.zhaomu2;
-		}
+			}
 		});
 		//判断对方牌的数量 ,并显示对方卡牌数
-		console.log(room.id);
 		socket.on("addCard"+room.id,(msg)=>{
+			console.log(msg);
 			if(msg.user!=me.user_name){
 				if(msg.len==1){
 					this.enCard1.active=true;
@@ -274,8 +293,11 @@ cc.Class({
 		socket.on("OneCardBack"+me.user_name,(msg)=>{
 			console.log("收到一张牌："+msg);
 			this.cards.push(msg);
+			
 			for(var i=0;i<5;i++){
+				
 				if(this.cs[i]==0){
+					console.log("在"+i+"显示一张新牌");
 					var c4;
 					c4=Cards.Card.fromId(msg);
 					var newCard4 = cc.instantiate(this.meCardPrefab).getComponent('createCard');
@@ -283,36 +305,40 @@ cc.Class({
 						this.meCard1.addChild(newCard4.node);
 						newCard4.init(c4);
 						this.meCard1.active=true;
+						this.cs[0]=1;
 					}else if(i==1){
 						this.meCard2.addChild(newCard4.node);
 						newCard4.init(c4);
 						this.meCard2.active=true;
+						this.cs[1]=1;
 					}else if(i==2){
 						this.meCard3.addChild(newCard4.node);
 						newCard4.init(c4);
 						this.meCard3.active=true;
+						this.cs[2]=1;
 					}
 					else if(i==3){
 						this.meCard4.addChild(newCard4.node);
 						newCard4.init(c4);
 						this.meCard4.active=true;
+						this.cs[3]=1;
 					}else if(i==4){
 						this.meCard5.addChild(newCard4.node);
 						newCard4.init(c4);
 						this.meCard5.active=true;
-					}
-					
+						this.cs[4]=1;
+					}	
 					break;
 				}
-			}
-			
+				
+			}	
+			console.log(this.cs);			
 		});
 		// 监听服务端计算牌生效后的结果 并在界面上展示
 		socket.on("endpai"+room.id,(msg)=>{
-			console.log(msg.host);
+			
+			console.log(msg);
 			if(msg.host==me.user_name){
-				this.qipaiBtn.active=false;
-				this.chupaiBtn.active=false;
 				this.meBlood.string = msg.myself.HP;
 				this.meMoney.string = msg.myself.money;
 				this.meMoneyAdd.string = msg.myself.moneyAdd;
@@ -333,7 +359,25 @@ cc.Class({
 				this.enJunshiLevel.string = msg.enemy.junshiLevel;
 				this.enZhaomu1.string = msg.enemy.zhaomu1;
 				this.enZhaomu2.string = msg.enemy.zhaomu2;
-				this.selectCardNode.active=false;
+				this.selectCardNode.active=false;	
+				this.qipaiBtn.active=false;
+				this.chupaiBtn.active=false;
+				this.endRound.active=false;
+				this.selectCardNode.removeAllChildren();
+				if(this.selectCardNode.name=="meCard1"){
+					this.cs[0] = 0; 
+				}else if(this.selectCardNode.name=="meCard2"){
+					this.cs[1] = 0; 
+				}else if(this.selectCardNode.name=="meCard3"){
+					this.cs[2] = 0; 
+				}
+				else if(this.selectCardNode.name=="meCard4"){
+					this.cs[3] = 0; 
+				}
+				else if(this.selectCardNode.name=="meCard5"){
+					this.cs[4] = 0; 
+				}
+				console.log(this.cs);
 			}else{
 				this.enBlood.string = msg.myself.HP;
 				this.enMoney.string = msg.myself.money;
@@ -356,21 +400,39 @@ cc.Class({
 				this.meZhaomu1.string = msg.enemy.zhaomu1;
 				this.meZhaomu2.string = msg.enemy.zhaomu2;
 			}
+			var c5;
+            c5=Cards.Card.fromId(msg.card);
+			var newCard5 = cc.instantiate(this.meCardPrefab).getComponent('createCard');
+            this.centerCard.addChild(newCard5.node);
+			newCard5.init(c5);
+			this.centerCard.active=true;
+			var hide = function(){
+				this.centerCard.active=false;
+			}
+			this.schedule(hide,2,1,2);
+			this.roundUp(this.round+1);
 			
 			
-
 		});
 		//监听服务端有弃牌的 无论双方谁弃牌都在战斗界面中间显示 弃牌 
-		socket.on("endqipai"+room.id,(msg)=>{
+		socket.on("endqipai",(msg)=>{
 			this.qipaiBtn.active=false;
 			this.chupaiBtn.active=false;
+			
 		});
 		// 监听服务端发回的 牌因为资源人口不足	没有生效 并显示错误原因。
-		socket.on("cardFail"+me.user_name,(msg)=>{
+		socket.on('cardFail'+me.user_name,(msg)=>{
 			console.log(msg);
-			//this.cardFailDetialNode.active=true;
-			//this.cardFailDetial.string=msg;
-		
+			this.cardFailDetialNode.active=true;
+			this.cardFailDetial.string=msg.info;
+			var cardFail = function(){
+				this.cardFailDetialNode.active=false;
+			}
+			this.schedule(cardFail,2,0,2);
+
+			//this.selectCard = "";
+			//this.var actionBy = cc.moveTo(2, cc.p(this.selectCardNode.x,this.selectCardNode.y-100));
+			//this.selectCardNode.runAction(actionBy);
 		});
 		//游戏结束
         socket.on("gameover",(msg)=>{
@@ -379,22 +441,33 @@ cc.Class({
     },
 	//选中要出的牌
 	clickedCard: function(event){
-		if(this.flag==0){
-			var actionBy = cc.moveTo(2, cc.p(event.target.x,event.target.y+100));
-			event.target.runAction(actionBy);
-			this.flag=1;
-			this.selectCard=event.target.children[0].children[4]._components[0].string;
-			this.selectCardNode = event.target;
+		
+		if(this.selectCard==0){
+			if(this.flag==0){
+				var actionBy = cc.moveTo(1, cc.p(event.target.x,event.target.y+100));
+				event.target.runAction(actionBy);
+				this.selectCard=event.target.children[0].children[0]._components[0].string;
+				console.log("选中"+this.selectCard);
+				this.flag=1;
+			}else{
+				var actionBy = cc.moveTo(1, cc.p(event.target.x,event.target.y-100));
+				event.target.runAction(actionBy);
+				this.selectCard=0;
+				this.flag=0;
+			}
+		this.selectCardNode = event.target;	
 		}else{
-			var actionBy = cc.moveTo(2, cc.p(event.target.x,event.target.y-100));
-			event.target.runAction(actionBy);
-			this.selectCard="";
+			var actionBy = cc.moveTo(1, cc.p(this.selectCardNode.x,this.selectCardNode.y-100));
+			this.selectCardNode.runAction(actionBy);
+			this.selectCard=0;
 			this.flag=0;
-			this.selectCardNode = event.target;
+			actionBy = cc.moveTo(1, cc.p(event.target.x,event.target.y+100));
+			event.target.runAction(actionBy);
+			this.selectCard=event.target.children[0].children[0]._components[0].string;
+			console.log("选中"+this.selectCard);
+			this.flag=1;
+			this.selectCardNode=event.target;	
 		}
-		
-		
-		
 	},
 	//出牌
 	chupai: function(){
@@ -405,7 +478,11 @@ cc.Class({
 			socket.emit('chupai',{room: room.id,enemy: room.user1.user_name,user:room.user2.user_name,cardid: this.selectCard});
 
 		}
-		
+		var actionBy = cc.moveTo(1, cc.p(this.selectCardNode.x,this.selectCardNode.y-100));
+		this.selectCardNode.runAction(actionBy);
+		this.selectCard=0;
+		this.flag=0;
+
 	},
 	//弃牌
 	qipai: function(){
@@ -417,8 +494,23 @@ cc.Class({
 	},
 	//确认退出
 	confirmtuichu: function(){
+		var room = JSON.parse(cc.sys.localStorage.getItem("roomInfo"));
+		socket.emit('quit',{room: room,which: this.user});
+		
 		cc.director.loadScene('Surface');
-		socket.emit('quit',{room: room,which: user});
+		
+	},
+	//回合结束
+	endRoundTo1: function(){
+		var room = JSON.parse(cc.sys.localStorage.getItem("roomInfo"));
+		this.round+=1;
+		socket.emit('roundUp',{round: this.round,user1:room.user1.user_name,user2:room.user2.user_name,roomid: room.id});
+		console.log("回合结束求发牌"+this.enName.string);
+		socket.emit('fapai',{room: room.id,user: this.enName.string});
+		this.qipaiBtn.active=false;
+		this.chupaiBtn.active=false;
+		this.endRound.active=false;
+		
 	},
 	//取消
 	quxiao: function(){

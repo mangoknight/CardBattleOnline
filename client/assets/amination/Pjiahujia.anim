@@ -1,0 +1,139 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "Pjiahujia",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 0.1,
+  "sample": 60,
+  "speed": 0.05,
+  "wrapMode": 1,
+  "curveData": {
+    "paths": {
+      "护甲1": {
+        "props": {
+          "opacity": [
+            {
+              "frame": 0,
+              "value": 255
+            },
+            {
+              "frame": 0.016666666666666666,
+              "value": 200
+            },
+            {
+              "frame": 0.03333333333333333,
+              "value": 150
+            },
+            {
+              "frame": 0.05,
+              "value": 255
+            },
+            {
+              "frame": 0.06666666666666667,
+              "value": 200
+            },
+            {
+              "frame": 0.08333333333333333,
+              "value": 150
+            },
+            {
+              "frame": 0.1,
+              "value": 255
+            }
+          ]
+        }
+      },
+      "PdValue": {
+        "props": {
+          "color": [
+            {
+              "frame": 0,
+              "value": {
+                "__type__": "cc.Color",
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+              }
+            },
+            {
+              "frame": 0.016666666666666666,
+              "value": {
+                "__type__": "cc.Color",
+                "r": 192,
+                "g": 183,
+                "b": 77,
+                "a": 255
+              }
+            },
+            {
+              "frame": 0.03333333333333333,
+              "value": {
+                "__type__": "cc.Color",
+                "r": 233,
+                "g": 179,
+                "b": 6,
+                "a": 255
+              }
+            },
+            {
+              "frame": 0.05,
+              "value": {
+                "__type__": "cc.Color",
+                "r": 255,
+                "g": 163,
+                "b": 0,
+                "a": 255
+              }
+            },
+            {
+              "frame": 0.06666666666666667,
+              "value": {
+                "__type__": "cc.Color",
+                "r": 185,
+                "g": 157,
+                "b": 68,
+                "a": 255
+              }
+            },
+            {
+              "frame": 0.08333333333333333,
+              "value": {
+                "__type__": "cc.Color",
+                "r": 185,
+                "g": 161,
+                "b": 100,
+                "a": 255
+              }
+            },
+            {
+              "frame": 0.1,
+              "value": {
+                "__type__": "cc.Color",
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 255
+              }
+            }
+          ]
+        },
+        "comps": {
+          "cc.Label": {
+            "string": [
+              {
+                "frame": 0,
+                "value": "10"
+              },
+              {
+                "frame": 0.1,
+                "value": "11"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "events": []
+}

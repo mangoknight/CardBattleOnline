@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "4c90fc63-030a-4d6a-9b42-b57eb4f7931a",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "外交官": {
+      "ver": "1.0.3",
+      "uuid": "8d483191-ccda-4c8c-99a3-2ba73318b7cd",
+      "rawTextureUuid": "4c90fc63-030a-4d6a-9b42-b57eb4f7931a",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 582,
+      "height": 276,
+      "rawWidth": 582,
+      "rawHeight": 276,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

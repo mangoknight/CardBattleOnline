@@ -668,6 +668,7 @@ var removeByValue = function(cards,id){
         if(cards[key]==id){
             delete cards[key];
             console.log(cards);
+            break;
         }
     }
     return cards;

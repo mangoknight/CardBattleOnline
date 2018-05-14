@@ -148,7 +148,7 @@ io.on('connection', function (socket) {
         redis.get("card"+msg.room+msg.user,(e2,r2)=>{
           cards=JSON.parse(r2);
           var result = ccc.calculateBouns(msg.cardid,myself,enemy);
-          console.log(result);
+         
               if(result.status){
                 var car = ccc.removeByValue(cards, msg.cardid);
                 var len = Object.keys(car).length;
@@ -162,7 +162,7 @@ io.on('connection', function (socket) {
                   redis.set("info"+msg.user+msg.room,JSON.stringify(result.myself));
                   redis.set("info"+msg.enemy+msg.room,JSON.stringify(result.enemy));
                   console.log(msg.user);
-                  io.emit("endpai"+msg.room,{myself:result.myself,enemy:result.enemy,host:msg.user});
+                  io.emit("endpai"+msg.room,{myself:result.myself,enemy:result.enemy,host:msg.user,card:msg.cardid});
                   io.emit("addCard"+msg.room,{user:msg.user,len:len}) 
                 }else{//如果有死的，清除redis，给失败的发送失败消息，胜利的接收胜利消息 ，
                   redis.del("info"+msg.user+msg.room);
@@ -174,6 +174,7 @@ io.on('connection', function (socket) {
                 }
                
               }else{
+                console.log(result);
                 socket.emit("cardFail"+msg.user,result);
               }
         });
@@ -189,10 +190,13 @@ io.on('connection', function (socket) {
     //房间信息，which 1 or 2 ，{room：room，which 1 2}
     if(msg.which == 1){
       //退房间输场+1 对手胜场+1 弹出胜利
-      var update ;
-      socket.emit("GameOver"+msg.roomid,{room:msg.roomid,lost:msg.room.user1});
+      // var qu = sqlcmd.Select('user', ['user_name']).Where({ user_name: msg.name }).query;
+      // var update = sqlcmd.Update();
+      socket.emit("GameOver"+msg.room.id,{room:msg.roomid,lost:msg.room.user1.user_name});
       //游戏结束 清除redis
       //
+    }else{
+      socket.emit("GameOver"+msg.room.id,{room:msg.roomid,lost:msg.room.user2.user_name});
     }
   });
   socket.on("qipai",(msg)=>{
@@ -238,7 +242,8 @@ io.on('connection', function (socket) {
   socket.on("fapai",(msg)=>{
     console.log(msg);
     var card1 = ccc.getOne();
-    //var cards=[];
+    console.log("抽一张新牌给"+msg.user+"----"+card1);
+    io.emit("OneCardBack"+msg.user,card1);
     redis.get("card"+msg.room+msg.user,(e,r)=>{
       r=JSON.parse(r);
       
@@ -248,7 +253,7 @@ io.on('connection', function (socket) {
       //cards
       redis.set("card"+msg.room+msg.user,JSON.stringify(r));
       var len = Object.keys(r).length;
-      socket.emit("OneCardBack"+msg.user,card1);
+      
       io.emit('addCard'+msg.room,{user:msg.user,len:len});
     });
    
