@@ -163,13 +163,13 @@ io.on('connection', function (socket) {
                   redis.set("info"+msg.enemy+msg.room,JSON.stringify(result.enemy));
                   console.log(msg.user);
                   io.emit("endpai"+msg.room,{myself:result.myself,enemy:result.enemy,host:msg.user,card:msg.cardid});
-                  io.emit("addCard"+msg.room,{user:msg.user,len:len}) 
+                  
                 }else{//如果有死的，清除redis，给失败的发送失败消息，胜利的接收胜利消息 ，
                   redis.del("info"+msg.user+msg.room);
                   redis.del("info"+msg.enemy+msg.room);
                   redis.del("card"+msg.room+msg.user);
                   redis.del("card"+msg.room+msg.enemy);
-                  socket.emit("GameOver"+msg.room,{room:msg.room,lost:die.name});
+                  io.emit("GameOver"+msg.room,{room:msg.room,lost:die.name});
                   
                 }
                
@@ -185,18 +185,22 @@ io.on('connection', function (socket) {
    
 
   });
+  //对方卡牌变化
+  socket.on("cardLen",(msg)=>{
+
+    io.emit("addCard"+msg.room,{user:msg.user,len:msg.len});
+  });
   //退房
   socket.on("quit",(msg)=>{
     //房间信息，which 1 or 2 ，{room：room，which 1 2}
     if(msg.which == 1){
       //退房间输场+1 对手胜场+1 弹出胜利
-      // var qu = sqlcmd.Select('user', ['user_name']).Where({ user_name: msg.name }).query;
-      // var update = sqlcmd.Update();
-      socket.emit("GameOver"+msg.room.id,{room:msg.roomid,lost:msg.room.user1.user_name});
+      
+      io.emit("GameOver"+msg.room,{room:msg.roomid,lost:msg.room.user1.user_name});
       //游戏结束 清除redis
       //
     }else{
-      socket.emit("GameOver"+msg.room.id,{room:msg.roomid,lost:msg.room.user2.user_name});
+      io.emit("GameOver"+msg.room,{room:msg.roomid,lost:msg.room.user2.user_name});
     }
   });
   socket.on("qipai",(msg)=>{
@@ -238,6 +242,28 @@ io.on('connection', function (socket) {
     
     
   });
+  socket.on("record",(msg)=>{
+    //name win:1,0  
+    
+   var qu = sqlcmd.Select('user', ['user_name','user_win','user_lose']).Where({ user_name: msg.name }).query;
+   sqlcmd.Doit(qu, (a, b) => {
+    if(msg.win == 1){
+      var win = b[0].user_win;
+      var update = sqlcmd.Update({user_win:win+1},"user",{user_name: msg.name});
+      sqlcmd.Doit(update, (a, b) => {
+        console.log(a);
+      });
+      }else{
+        var lose = b[0].user_lose;
+        var update = sqlcmd.Update({user_lose:lose+1},"user",{user_name: msg.name});
+        sqlcmd.Doit(update, (a, b) => {
+          console.log(a);
+        });
+      } 
+      
+   });
+  
+  });
   //发牌
   socket.on("fapai",(msg)=>{
     console.log(msg);
@@ -252,9 +278,8 @@ io.on('connection', function (socket) {
       console.log(r);
       //cards
       redis.set("card"+msg.room+msg.user,JSON.stringify(r));
-      var len = Object.keys(r).length;
+    
       
-      io.emit('addCard'+msg.room,{user:msg.user,len:len});
     });
    
     // cards = JSON.parse(cards); 

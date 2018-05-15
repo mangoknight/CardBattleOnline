@@ -259,7 +259,7 @@ var obj = {
         if(myself.money>4){
             myself.money -= 5;
             var result1 = Recruit(0,myself.zhaomu1,myself.zhaomu2);
-            var result2 = addPerson(result1,"waijiaogua",null,"wj",myself);
+            var result2 = addPerson(result1,"waijiaoguan",null,"wj",myself);
             return {status:true,myself:result2,enemy:enemy};
         }else{
             return {status:false,info:"金币不足"};
@@ -507,7 +507,7 @@ var obj = {
     49 : function(myself,enemy) {//借兵
         if(myself.money>9&&(myself.zhaomu1.type=="wj"||myself.zhaomu2.type=="wj")){
             myself.money -= 10;
-            myself +=5;
+            myself.people +=5;
             return {status:true,myself:myself,enemy:enemy};
         }else{
             return {status:false,info:"金币不足或没招募外交官"};

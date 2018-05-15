@@ -1,14 +1,14 @@
 {
   "ver": "1.0.0",
-  "uuid": "e0386592-ed16-4431-842d-55c1b8a9cd64",
+  "uuid": "474a4b23-1eab-4d77-9145-7057466cfd4c",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "subMetas": {
     "牌套2": {
       "ver": "1.0.3",
-      "uuid": "07df482e-8d87-4fcc-a167-3698ca51e242",
-      "rawTextureUuid": "e0386592-ed16-4431-842d-55c1b8a9cd64",
+      "uuid": "dd027daf-8670-442b-9949-2c7343df7d83",
+      "rawTextureUuid": "474a4b23-1eab-4d77-9145-7057466cfd4c",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,
