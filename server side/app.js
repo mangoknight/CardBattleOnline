@@ -25,12 +25,28 @@ redis.on("error", function (error) {
 var http = require('http').Server(app).listen(7777);
 var io = require("socket.io")(http);
 //var epwd = encrypt.enc('1111');
-
+var countt=0;
+var counttt=[];
 io.on('connection', function (socket) {
   //这是socket.io 即时通讯
-
+  
+  socket.on("plus",(msg)=>{
+   
+    var a=0;
+    for(var i=0;i<counttt.length;i++){
+      if(counttt[i]==msg.name){
+        a=a+1;
+      }
+    }
+    if(a==0){
+      countt = countt+1;
+      counttt.push(msg.name);
+      io.emit("online",countt);
+    }
+  });
   //登录
   socket.on('login', (msg) => {
+    console.log(msg);
     var str = new sqlcmd.Select('user', ['user_pwd']).Where({ user_name: msg.name }).query;
     sqlcmd.Doit(str, (a, b) => {
       console.log(a);
@@ -72,7 +88,7 @@ io.on('connection', function (socket) {
             io.emit('success' + msg.name, { status: true, content: '注册成功!.', user: msg.name });
           }
           else {
-            io.emit('fail' + msg.name, { status: false, content: '注册失败!.', user: msg.name });
+            io.emit('fail' + msg.name,{ status: false, content: '注册失败!.', user: msg.name });
           }
         });
       }
@@ -154,9 +170,9 @@ io.on('connection', function (socket) {
                 var len = Object.keys(car).length;
                 redis.set("card"+msg.room+msg.user,JSON.stringify(car));
                 //判断有没有猛将 再多减一点伤害
-                
+                console.log(result);
                 //判断有没有死的
-                var die = user.dieOrAlive(myself,enemy);
+                var die = user.dieOrAlive(result.myself,result.enemy);
                 console.log(die);
                 if(die.result){//如果没死的，游戏继续，更新redis，发回客户端
                   redis.set("info"+msg.user+msg.room,JSON.stringify(result.myself));
@@ -169,7 +185,12 @@ io.on('connection', function (socket) {
                   redis.del("info"+msg.enemy+msg.room);
                   redis.del("card"+msg.room+msg.user);
                   redis.del("card"+msg.room+msg.enemy);
-                  io.emit("GameOver"+msg.room,{room:msg.room,lost:die.name});
+                  if(die.name==1){
+                    io.emit("GameOver"+msg.room,{room:msg.room,lost:msg.user});
+                  }else{
+                    io.emit("GameOver"+msg.room,{room:msg.room,lost:msg.enemy});
+                  }
+                  
                   
                 }
                
@@ -187,11 +208,11 @@ io.on('connection', function (socket) {
   });
   //对方卡牌变化
   socket.on("cardLen",(msg)=>{
-
     io.emit("addCard"+msg.room,{user:msg.user,len:msg.len});
   });
   //退房
   socket.on("quit",(msg)=>{
+    msg=JSON.parse(msg);
     //房间信息，which 1 or 2 ，{room：room，which 1 2}
     if(msg.which == 1){
       //退房间输场+1 对手胜场+1 弹出胜利
@@ -244,7 +265,6 @@ io.on('connection', function (socket) {
   });
   socket.on("record",(msg)=>{
     //name win:1,0  
-    
    var qu = sqlcmd.Select('user', ['user_name','user_win','user_lose']).Where({ user_name: msg.name }).query;
    sqlcmd.Doit(qu, (a, b) => {
     if(msg.win == 1){
@@ -291,7 +311,8 @@ io.on('connection', function (socket) {
   //主界面聊天
   socket.on('chat',(msg)=>{
     //发送方，接收方，内容。
-    socket.emit('chatBack'+msg.receive,msg);
+    console.log(msg);
+    io.emit('chatBack'+msg.name,msg);
   });
   //排行榜
   socket.on('rank',(msg)=>{
