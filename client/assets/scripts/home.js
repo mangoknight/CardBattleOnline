@@ -90,6 +90,7 @@ cc.Class({
 		cc.director.loadScene('login');
 	},
 	rank: function(){
+		var info = JSON.parse(cc.sys.localStorage.getItem("userInfo"));
 		socket.emit('rank',info.user_name);
 		cc.director.loadScene('rankData');
 	},

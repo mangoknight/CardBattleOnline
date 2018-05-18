@@ -40,7 +40,7 @@ cc.Class({
 		if(win+lose==0){
 			return 0+"%";
 		}
-		return win/(win+lose)*100+"%";
+		return parseInt(win/(win+lose)*100)+"%";
 	},
     onLoad: function() {
 		var info = JSON.parse(cc.sys.localStorage.getItem("userInfo"));
